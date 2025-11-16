@@ -23,30 +23,43 @@
     </div>
 </main>
 
-<div id="modal" class="bg-neutral-500   ml-20 p-3  w-80 h-[600px]  rounded-xl" >
-    <h1 class="ml-20">Worker Info</h1>
-    <form  class="grid grid-cols-1 gap-2 ml-8  mt-10">
-        <lable >Nom:</lable>
-        <input type="text" placeholder="Nom" class="w-60  p-3 rounded-xl ">
-        <label>Role:</label>
-        <select  class="w-60  p-3 rounded-xl">Role
+
+<div id="modal" class="absolute top-10 left-1/2 transform -translate-x-1/2 shadow-lg p-3 w-full max-w-[500px] h-auto rounded-xl border border-gray-300 bg-white z-50">
+    <h1 class="mx-auto text-center  mt-2">Worker Info</h1>
+    <form  class="flex flex-col items-center gap-2 mx-auto  mt-10   ">
+        <label class="w-full max-w-[240px] text-left">Nom:</label>
+        <input type="text" class="w-full max-w-[240px]  p-3 rounded-xl border border-gray-300 ">
+        <label class="w-full max-w-[240px] text-left">Role:</label>
+        <select  class="w-60  p-3 rounded-xl border border-gray-300">Role
             <option>Réceptionniste</option>
             <option>Technicien IT</option>
             <option>Manager</option>
             <option>Nettoyage</option>
             <option>Agent de sécurité</option>
         </select>
-        <label>URL Photo:</label>
-        <input class="w-60 p-3 rounded-xl">
-        <label>Email:</label>
-        <input type="email"  class="w-60 p-3 rounded-xl">
-        <label>Phone:</label>
-        <input type="text"  class="w-60  p-3 rounded-xl"> 
-        <label>Expériences professionnelle</label>
-        <button id="btnModal" type="submit" class="w-60  p-3 rounded-xl bg-green-800">Add Employee</button>
+        <label class="w-full max-w-[240px] text-left">URL Photo:</label>
+        <input type="url" class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+        <label class="w-full max-w-[240px] text-left">Email:</label>
+        <input type="email"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+        <label class="w-full max-w-[240px] text-left">Phone:</label>
+        <input type="text"  class="w-full max-w-[240px]  p-3 rounded-xl border border-gray-300"> 
+        <div id="Experience"  >
+        <label class="w-full max-w-[240px] text-left">Expériences professionnelle</label>
+        <div id="item" class="grid grid-cols-1" >
+            <label class="w-full max-w-[240px] text-left">Entreprise</label>
+            <input type="text"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+            <label class="w-full max-w-[240px] text-left">Post</label>
+            <input type="text"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+            <label class="w-full max-w-[240px] text-left">Duree</label>
+            <input type="number" class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+            <button type="button" class="w-60  p-3 rounded-xl bg-red-800 mt-6" >remove</button>
+        </div>
+        <button type="button" class="w-full max-w-[240px]  p-3 rounded-xl bg-green-800 mt-6">+ Add Experience</button>
+        </div>
+           
+        <button id="btnModal" type="submit" class="w-full max-w-[240px]  p-3 rounded-xl bg-green-800">+Add Employee</button>
     </form>
 </div>
-
 
 <script src="main.js"></script>
 </body>
