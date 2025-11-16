@@ -13,8 +13,8 @@
  <main>
     <div class="layout">    
         <div id="sidebar" class="sidebar">
-            <h1 class="">WorkSphere</h1>
-            <div class="bg-green-500 p-3"><button id="btn">+Add New Workar</button></div>
+            <h1 class=" ml-14">WorkSphere</h1>
+            <div class="bg-green-500 p-2  mt-10 rounded-xl" ><button id="btn" class="ml-10">+Add New Workar</button></div>
         </div>       
         <div class="main">
             <button id="menuBtn" class="menu-btn">☰</button>
@@ -23,6 +23,29 @@
     </div>
 </main>
 
+<div id="modal" class="bg-neutral-500   ml-20 p-3  w-80 h-[600px]  rounded-xl" >
+    <h1 class="ml-20">Worker Info</h1>
+    <form  class="grid grid-cols-1 gap-2 ml-8  mt-10">
+        <lable >Nom:</lable>
+        <input type="text" placeholder="Nom" class="w-60  p-3 rounded-xl ">
+        <label>Role:</label>
+        <select  class="w-60  p-3 rounded-xl">Role
+            <option>Réceptionniste</option>
+            <option>Technicien IT</option>
+            <option>Manager</option>
+            <option>Nettoyage</option>
+            <option>Agent de sécurité</option>
+        </select>
+        <label>URL Photo:</label>
+        <input class="w-60 p-3 rounded-xl">
+        <label>Email:</label>
+        <input type="email"  class="w-60 p-3 rounded-xl">
+        <label>Phone:</label>
+        <input type="text"  class="w-60  p-3 rounded-xl"> 
+        <label>Expériences professionnelle</label>
+        <button id="btnModal" type="submit" class="w-60  p-3 rounded-xl bg-green-800">Add Employee</button>
+    </form>
+</div>
 
 
 <script src="main.js"></script>

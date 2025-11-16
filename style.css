@@ -9,7 +9,7 @@
     left: 0;
     width: 20rem; 
     height: 100vh;
-    background: #7f0505;
+    background: #7e7c7c;
     padding: 1rem;
     transform: translateX(-100%);  
     transition: transform 0.3s ease;
@@ -41,6 +41,9 @@
     width: 100%;
     height: 900px; 
 }
+/* La parie des zones */
+
+
 
 /* --- Responsive designe */
 @media (min-width: 768px) {
@@ -65,4 +68,7 @@
     margin-top:40px;
     margin-left:40px;
 }
+/* La parie formulaire */
+
+
 }
