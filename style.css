@@ -9,7 +9,7 @@
     left: 0;
     width: 20rem; 
     height: 100vh;
-    background: #7e7c7c;
+   
     padding: 1rem;
     transform: translateX(-100%);  
     transition: transform 0.3s ease;
