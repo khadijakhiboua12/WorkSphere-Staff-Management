@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorkSphere App</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
 </head> 
 
@@ -14,7 +15,7 @@
     <div class="layout">    
         <div id="sidebar" class="sidebar">
             <h1 class=" ml-14">WorkSphere</h1>
-            <div class="bg-green-500 p-2  mt-10 rounded-xl" ><button id="btn" class="ml-10">+Add New Workar</button></div>
+            <div class="bg-green-500 p-2  mt-10 rounded-xl" ><button id="btn" class="ml-10"><i class="fas fa-plus"></i> Add New Workar</button></div>
             <!-- Afficher une carte d'un employer -->
              <div id="cards-container"></div>
              <div class="card">
@@ -45,25 +46,16 @@
         </select>
         <label class="w-full max-w-[240px] text-left">URL Photo:</label>
         <input type="url" class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
+        
         <label class="w-full max-w-[240px] text-left">Email:</label>
         <input type="email"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
         <label class="w-full max-w-[240px] text-left">Phone:</label>
         <input type="text"  class="w-full max-w-[240px]  p-3 rounded-xl border border-gray-300"> 
-        <div id="Experience"  >
-        <label class="w-full max-w-[240px] text-left">Expériences professionnelle</label>
-        <div id="item" class="grid grid-cols-1" >
-            <label class="w-full max-w-[240px] text-left">Entreprise</label>
-            <input type="text"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
-            <label class="w-full max-w-[240px] text-left">Post</label>
-            <input type="text"  class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
-            <label class="w-full max-w-[240px] text-left">date Debut</label>
-            <input type="date" class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
-            <label class="w-full max-w-[240px] text-left">date Fin</label>
-            <input type="date" class="w-full max-w-[240px] p-3 rounded-xl border border-gray-300">
-            <button type="button" class="w-60  p-3 rounded-xl bg-red-800 mt-6" >remove</button>
-        </div>
-        <button type="button" class="w-full max-w-[240px]  p-3 rounded-xl bg-green-800 mt-6">+ Add Experience</button>
-        </div>
+
+          
+
+
+
            
         <button id="btnModal" type="submit" class="w-full max-w-[240px]  p-3 rounded-xl bg-green-800">+Add Employee</button>
     </form>
