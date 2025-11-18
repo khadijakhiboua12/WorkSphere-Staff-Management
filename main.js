@@ -1,5 +1,5 @@
 //Tableau  contient les donnes 
- tabEmployer = [
+ let tabEmployer =  JSON.parse(localStorage.getItem("employer")) || [
     {
         id: 1,
         Nom: "khadija",
@@ -8,7 +8,7 @@
         email: "khadija@gmail.com",
         phone: "061234567",
         Experience: [
-            { Entreprise: "hhhd", Post: "Receptionniste", Duree: "2 ans" }
+            { Entreprise: "hhhd", Post: "Receptionniste", dateDeub: "12-04-2002" ,dateFin:"12-07-2002"}
         ]
     },
     {
@@ -19,7 +19,7 @@
         email: "youssef@gmail.com",
         phone: "0611223344",
         Experience: [
-            { Entreprise: "ABC Corp", Post: "Manager", Duree: "3 ans" }
+            { Entreprise: "ABC Corp", Post: "Manager", dateDeub: "12-04-2002" ,dateFin:"12-07-2002" }
         ]
     }
 ];
@@ -56,7 +56,7 @@ function AfficherCarte(data){
    }
      
 }
-AfficherCarte(data);
+AfficherCarte(tabEmployer);
 //Fonction pour add plusieur expirience
 function addExperience() {
     const container = document.getElementById("experience-container");
@@ -66,28 +66,28 @@ function addExperience() {
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="block">Entreprise</label>
-                <input type="text" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="text" name="entreprise" "class="w-full p-2 rounded-xl border border-gray-300">
             </div>
             <div>
                 <label class="block">Post</label>
-                <input type="text" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="text" name="post" class="w-full p-2 rounded-xl border border-gray-300">
             </div>
         </div>
         <div class="grid grid-cols-2 gap-3 mt-3">
             <div>
                 <label class="block">Date Début</label>
-                <input type="date" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="date" name="dateDebut" class="w-full p-2 rounded-xl border border-gray-300">
             </div>
 
             <div>
                 <label class="block">Date Fin</label>
-                <input type="date" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="date"  name="dateFin" class="w-full p-2 rounded-xl border border-gray-300">
             </div>
         </div>
     `;
     container.prepend(experienceDiv);
 }
-//
+//function pour ajouter les employer
 function AddWorker(modalId){
     const modal=document.getElementById(modalId);
     modal.classList.toggle("hidden");
@@ -95,3 +95,45 @@ function AddWorker(modalId){
 
 document.getElementById("btn").addEventListener("click",()=>AddWorker("modal"));
 document.getElementById("btncancel").addEventListener("click",()=>AddWorker("modal"));
+
+
+// Sauvegarder l'employer 
+function saveEmployee() {
+    const nom = document.getElementById("nomInput").value;
+    const role = document.getElementById("roleSelect").value;
+    const url = document.getElementById("photoInput").value;
+    const email = document.getElementById("emailInput").value;
+    const phone = document.getElementById("phoneInput").value;
+    const experienceDivs = document.querySelectorAll("#experience-container > div");
+    const experiences = [];
+    for (let i = 0; i < experienceDivs.length; i++) {
+        const div = experienceDivs[i];
+        experiences.push({
+            Entreprise: div.querySelector("input[name='entreprise']").value,
+            Post: div.querySelector("input[name='post']").value,
+            dateDebut: div.querySelector("input[name='dateDebut']").value,
+            dateFin: div.querySelector("input[name='dateFin']").value
+        });
+    }
+    const newEmployee = {
+        id: tabEmployer.length + 1,
+        Nom: nom,
+        Role: [role],
+        Url: url,
+        email: email,
+        phone: phone,
+        Experience: experiences
+    };
+
+    // Ajouter et sauvegarder
+    tabEmployer.push(newEmployee);
+    setEmployer(tabEmployer);
+    document.getElementById("employeForm").reset();
+    document.getElementById("experience-container").innerHTML = "";
+    document.getElementById("modal").classList.add("hidden");
+    // Réafficher les cartes
+    AfficherCarte(tabEmployer);
+}
+
+// bouton Save
+document.getElementById("btnsave").addEventListener("click", saveEmployee);

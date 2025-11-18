@@ -29,27 +29,27 @@
 <div id="modal" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-3 w-full max-w-[500px] h-[600px]
         rounded-xl border border-gray-300 bg-white z-50 overflow-y-auto hidden">
     <h1 class="mx-auto text-center  mt-2">Worker Info</h1>
-    <form  class="flex flex-col items-start gap-2 mx-auto  mt-10   ">
+    <form   id="employeForm" class="flex flex-col items-start gap-2 mx-auto  mt-10   ">
         <label class="w-full max-w-[240px] text-left">Nom:</label>
-        <input type="text" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300 ">
+        <input id="nomInput" type="text" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300 ">
         <label class="w-full max-w-[240px] text-left">Role:</label>
-        <select  class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300">Role
+        <select   id="roleSelect" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300">Role
             <option>Réceptionniste</option>
             <option>Technicien IT</option>
             <option>Manager</option>
             <option>Nettoyage</option>
             <option>Agent de sécurité</option>
         </select>
-       
-<div class="w-full max-w-[300px] flex items-center gap-4">
-    <input type="url"  id="photoInput" placeholder="Entrez URL photo" class="flex-1 p-3 rounded-xl border border-gray-300"/>
+       <label>Photo(url)</label>
+    <div class="w-full max-w-[300px] flex items-center gap-4">
+    <input  id="photoInput" type="url"  id="photoInput" placeholder="Entrez URL photo" class="flex-1 p-3 rounded-xl border border-gray-300"/>
     <div class="w-[250px] h-[90px] rounded-full border-4 border-gray-300 flex items-center justify-center">
     <img  id="photoPreview"  src="" class="w-15 h-15 rounded-xl object-cover hidden">
     </div>
-</div>
+   </div>
   <label class="w-full max-w-[240px] text-left">Email:</label>
-        <input type="email"  class="w-full max-w-[500px] p-3 rounded-xl border border-gray-300">
-        <label class="w-full max-w-[240px] text-left">Phone:</label>
+        <input id="emailInput" type="email"  class="w-full max-w-[500px] p-3 rounded-xl border border-gray-300">
+        <label id="phoneInput" class="w-full max-w-[240px] text-left">Phone:</label>
         <input type="text"  class="w-full max-w-[590px]  p-3 rounded-xl border border-gray-300"> 
           <!-- Ajouter Experience -->
         <div class="w-full max-w-[300px] flex flex-col items-center ml-20">
