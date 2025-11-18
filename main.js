@@ -60,16 +60,14 @@ AfficherCarte(data);
 //Fonction pour add plusieur expirience
 function addExperience() {
     const container = document.getElementById("experience-container");
-    const expDiv = document.createElement("div");
-    expDiv.className = "p-4 border rounded-xl mb-4 bg-gray-100";
-    expDiv.innerHTML = `
-        <!-- Ligne 1 : Entreprise + Post -->
+    const experienceDiv = document.createElement("div");
+    experienceDiv.className = "p-4 border rounded-xl mb-4 bg-gray-100";
+    experienceDiv.innerHTML = `
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="block">Entreprise</label>
                 <input type="text" class="w-full p-2 rounded-xl border border-gray-300">
             </div>
-
             <div>
                 <label class="block">Post</label>
                 <input type="text" class="w-full p-2 rounded-xl border border-gray-300">
@@ -87,7 +85,7 @@ function addExperience() {
             </div>
         </div>
     `;
-    container.prepend(expDiv);
+    container.prepend(experienceDiv);
 }
 
 
