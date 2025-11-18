@@ -87,5 +87,11 @@ function addExperience() {
     `;
     container.prepend(experienceDiv);
 }
+//
+function AddWorker(modalId){
+    const modal=document.getElementById(modalId);
+    modal.classList.toggle("hidden");
+}
 
-
+document.getElementById("btn").addEventListener("click",()=>AddWorker("modal"));
+document.getElementById("btncancel").addEventListener("click",()=>AddWorker("modal"));
