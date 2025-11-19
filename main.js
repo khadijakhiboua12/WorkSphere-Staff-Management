@@ -2,28 +2,33 @@
  let tabEmployer =  JSON.parse(localStorage.getItem("employer")) || [
     {
         id: 1,
-        Nom: "khadija",
-        Role: ["Technicien IT"],
+        Nom: "hello",
+        Role: "Technicien IT",
         Url: "Image_profile1.jpg",
         email: "khadija@gmail.com",
         phone: "061234567",
+        is_worked:false,
+        zone_work:null ,
         Experience: [
             { Entreprise: "hhhd", Post: "Receptionniste", dateDeub: "12-04-2002" ,dateFin:"12-07-2002"}
         ]
     },
     {
         id: 2,
-        Nom: "Hoda",
-        Role: ["Manager"],
+        Nom: "kkk",
+        Role: "Manager",
         Url: "Image_profile2.jpg",
         email: "youssef@gmail.com",
         phone: "0611223344",
+         is_worked:false,
+        zone_work:null,
         Experience: [
             { Entreprise: "ABC Corp", Post: "Manager", dateDeub: "12-04-2002" ,dateFin:"12-07-2002" }
         ]
     }
 ];
-
+let container=document.getElementById("cards-container");
+let container_reseption_ =document.getElementById("container_Réception")
 //fonction de setItem
 function setEmployer(tabEmployer){
    localStorage.setItem("employer",JSON.stringify(tabEmployer));
@@ -37,21 +42,23 @@ function   getEmployer(){
 //Affichage la  cartes  de  la page
 let data=getEmployer();
 function AfficherCarte(data){
-    const container=document.getElementById("cards-container");
     container.innerHTML="";
    for(let i=0;i<data.length;i++){
         const employe=data[i];
+        if(employe.is_worked==false){
       container.innerHTML+=`
     <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
     <img src="${employe.Url}" class="rounded-full w-20 h-20">
    
      <div class=" flex flex-col">
+     <h5 class="id_card font-bold text-lg">${employe.id}</h5>
      <h2 class="font-bold text-lg">${employe.Nom}</h2> 
      <p class="text-gray-600">${employe.Role}</p>
   </div>
     </div>
     
      `;
+     }
    }
      
 }
@@ -208,11 +215,14 @@ function saveEmployee() {
     const newEmployee = {
         id: tabEmployer.length + 1,
         Nom: nom,
-        Role: [role],
+        Role: role,
         Url: url,
         email: email,
         phone: phone,
-        Experience: experiences
+        Experience: experiences,
+        is_worked:false,
+        zone_work:null 
+
     };
     tabEmployer.push(newEmployee);
     setEmployer(tabEmployer);
@@ -222,4 +232,130 @@ function saveEmployee() {
     AfficherCarte(tabEmployer);
 }
 //L parie de zone
+let _room1 =document.getElementById("room1")
+let _room2 =document.getElementById("room2")
+let _room3 =document.getElementById("room3")
+let _room4 =document.getElementById("room4")
+let _room5 =document.getElementById("room5")
+let _room6 =document.getElementById("room6")
+
+
+
+
+
+
+
+function get_role_by_room_name(room_name,container_){
+    container_.innerHTML=""
+    let data = JSON.parse(localStorage.getItem("employer")) || []
+    let roles = {
+        "Reception": ["Manager", "Réceptionniste", "Nettoyage"],
+        "Salle des serveurs" : ["Manager", "Technicien IT", "Nettoyage"],
+        "Salle de sécurité":["Manager", "Agent de sécurité", "Nettoyage"],
+        "Salle du personnel": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
+        "Salle de conférence": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
+        "Salle d'archives": ["Manager"]
+}
+
+for(persons of Object.entries(data)){
+
+    for(room_ of Object.entries(roles)){
+       if(room_[0] == room_name){
+
+        for(let data_ of room_[1]){
+          if(data_==persons.Role){
+            
+        container_.innerHTML+=`
+                <div class="card shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
+                <img src="${persons.Url}" class="rounded-full w-20 h-20">
+            
+                <div class=" flex flex-col">
+                <h5 class="id_card font-bold text-lg">${persons.id}</h5> 
+                <h2 class="name font-bold text-lg">${persons.Nom}</h2> 
+                <p class="text-gray-600">${persons.Role}</p>
+            </div>
+          </div>
+    
+     `;
+          }
+
+        }
+        
+          
+       }
+       
+    }
+}
+
+
+}
+
+
+function fetch_data(container_to_fetch){
+container_to_fetch.innerHTML=""
+let data_1 = JSON.parse(localStorage.getItem("employer")) || []
+for(data__ of Object.entries(data_1)){
+if(data__.id==true){
+    container_to_fetch.innerHTML+=`
+                <div class="card shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
+                <img src="${data__.Url}" class="rounded-full w-20 h-20">
+                <div class=" flex flex-col">
+                <h5 class="id_card font-bold text-lg">${data__.id}</h5> 
+                <h2 class="name font-bold text-lg">${data__.Nom}</h2> 
+                <p class="text-gray-600">${data__.Role}</p>
+            </div>
+          </div>
+     `;
+}
+}
+}
+fetch_data(container_reseption_)
+
+
+_room1.addEventListener("click",()=>{
+
+get_role_by_room_name("Salle de conférence")
+})
+
+_room2.addEventListener("click",()=>{
+
+get_role_by_room_name("Reception",container_reseption_)
+
+container_reseption_.addEventListener("click",function(e){
+let card = e.target.closest(".card")
+let id_clicked=card.querySelector("h5").textContent
+let data_2 = JSON.parse(localStorage.getItem("employer")) || []
+for(update_umploiyer of Object.entries(data_2)){
+    if(update_umploiyer.id ===id_clicked){
+        update_umploiyer.is_worked=true
+        update_umploiyer.zone_work="Reception"
+        localStorage.setItem("employer",JSON.stringify(data_2));
+    }
+}
+  
+})
+
+
+
+
+
+})
+_room3.addEventListener("click",()=>{
+
+get_role_by_room_name("Salle des serveurs")
+})
+_room4.addEventListener("click",()=>{
+get_role_by_room_name("Salle de sécurité")
+
+})
+_room5.addEventListener("click",()=>{
+
+get_role_by_room_name("Salle du personnel")
+})
+_room6.addEventListener("click",()=>{
+
+get_role_by_room_name("Salle d'archives")
+})
+
+
 
