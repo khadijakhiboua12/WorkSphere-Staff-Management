@@ -42,8 +42,7 @@ function AfficherCarte(data){
    for(let i=0;i<data.length;i++){
         const employe=data[i];
       container.innerHTML+=`
-    <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 ">
-   
+    <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
     <img src="${employe.Url}" class="rounded-full w-20 h-20">
    
      <div class=" flex flex-col">
@@ -222,4 +221,5 @@ function saveEmployee() {
     document.getElementById("modal").classList.add("hidden");
     AfficherCarte(tabEmployer);
 }
+//L parie de zone
 
