@@ -141,10 +141,10 @@ function validateEmployeeForm() {
     const emailError = document.getElementById("emailError");
     const phoneError = document.getElementById("phoneError");
     const urlError = document.getElementById("urlError");
-    const nameRegex = /^[A-Za-z]{2,20}$/;
+    const nameRegex = /^[A-Za-z\s]{3,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{8,15}$/;
-    const urlRegex = /^[\w,\s-]+\.(jpg|jpeg|png|gif)$/i;
+    // const urlRegex = /^[\w,\s-]+\.(jpg|jpeg|png|gif)$/i;
     nomError.textContent = "";
     emailError.textContent = "";
     phoneError.textContent = "";
@@ -161,10 +161,10 @@ function validateEmployeeForm() {
         phoneError.textContent = "Numéro invalide !";
         isValid = false;
     }
-    if (!urlRegex.test(url)) {
-        urlError.textContent = "URL invalide !";
-        isValid = false;
-    }
+    // if (!urlRegex.test(url)) {
+    //     urlError.textContent = "URL invalide !";
+    //     isValid = false;
+    // }
     const experienceDivs = document.querySelectorAll("#experience-container > div");
     for (let i = 0; i < experienceDivs.length; i++) {
         const div = experienceDivs[i];
@@ -243,7 +243,7 @@ let _room6 = document.getElementById("room6")
 
 
 
-function afficherEmployesZone(room_name, container_) {
+function afficherEmployesZone(room_name,container_) {
 
     const roles_zone = {
     "Reception": ["Manager", "Réceptionniste", "Nettoyage"],
@@ -263,15 +263,13 @@ function afficherEmployesZone(room_name, container_) {
       if (emp.is_worked==false && rolesAcceptes.includes(emp.Role)) {
             
             container_.innerHTML += `
-        <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 ">
-                <div data-id="${emp.id}">
+                <div class="card cursor-pointer hover:bg-blue-100 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
                     <img src="${emp.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
                         <h5 class="font-bold">${emp.id}</h5>
                         <h2 class="font-bold text-lg">${emp.Nom}</h2>
                         <p class="text-gray-600">${emp.Role}</p>
                     </div>
-                </div>
                 </div>
             `;
         }
@@ -308,7 +306,7 @@ for(_data_ of employes ){
         if(_data_.is_worked){
 
    document.getElementById(_data_.zone_work).innerHTML+=
-              `<div class="card bg-red-50 rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
+              `<div class="card cursor-pointer bg-green-100  w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
                     <img src="${_data_.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
                         <h5 class="font-bold">${_data_.id}</h5>
@@ -347,12 +345,3 @@ _room6.addEventListener("click",()=>{
 afficherEmployesZone("Salle d'archives", document.getElementById("container_archives"));
 })
 
-
-// _room2.onclick = () => afficherEmployesZone("Reception", document.getElementById("container_reseption_"));
-// _room3.onclick = () => afficherEmployesZone("Salle des serveurs", document.getElementById("container_serveurs"));
-
-// _room4.onclick = () => afficherEmployesZone("Salle de sécurité", document.getElementById("container_securite"));
-
-// _room5.onclick = () => afficherEmployesZone("Salle du personnel", document.getElementById("container_personnel"));
-
-// _room6.onclick = () => afficherEmployesZone("Salle d'archives", document.getElementById("container_archives"));

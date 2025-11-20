@@ -29,7 +29,7 @@
                 <div class="flex flex-col" >
                     <h1 class="font-bold flex justify-center">Salle de conférence</h1>
                     <div class="flex justify-center mt-2"> <button id="room1" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_conference" style="max-height:200px; overflow-y: scroll;"></div>
+                      <div id="container_conference"   style="max-height:200px; margin-left:102px; overflow-y: scroll;"></div>
                 </div>
                 </div>
 
@@ -71,7 +71,7 @@
                     <div class="flex flex-col">
                     <h1 class="font-bold flex justify-center mt-9">Salle d’archives</h1>
                     <div class="flex justify-center mt-6"> <button id="room6" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_archives" style="max-height:200px; overflow-y: scroll;"></div>
+                      <div id="container_archives" class="flex felx-justifiy-center" style="max-height:200px; overflow-y: scroll;"></div>
             </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
     <input  type="url"  id="photoInput" placeholder="Entrez URL photo" class="flex-1 p-3 rounded-xl border border-gray-300"/>
 
     <div class="w-[250px] h-[90px] rounded-full border-4 border-gray-300 flex items-center justify-center">
-    <img  id="photoPreview"  src="" class="w-15 h-15 rounded-xl object-cover hidden">
+    <img  id="photoPreview"  src="" class="w-15 h-15 rounded-xl object-cover hidden" onerror="this.src ='/Image_profile1.jpg'">
     </div>
    </div>
     <span class="text-red-600 text-sm error-message" id="urlError"></span>
