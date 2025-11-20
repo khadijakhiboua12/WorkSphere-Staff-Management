@@ -269,6 +269,7 @@ function afficherEmployesZone(room_name,container_) {
                         <h5 class="font-bold">${emp.id}</h5>
                         <h2 class="font-bold text-lg">${emp.Nom}</h2>
                         <p class="text-gray-600">${emp.Role}</p>
+                      
                     </div>
                 </div>
             `;
@@ -306,12 +307,13 @@ for(_data_ of employes ){
         if(_data_.is_worked){
 
    document.getElementById(_data_.zone_work).innerHTML+=
-              `<div class="card cursor-pointer bg-green-100  w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
+              `<div class="card cursor-pointer bg-red-100  w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
                     <img src="${_data_.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
-                        <h5 class="font-bold">${_data_.id}</h5>
+                       
                         <h2 class="font-bold text-lg">${_data_.Nom}</h2>
                         <p class="text-gray-600">${_data_.Role}</p>
+                          <button  class="supprimer rounded-lg bg-red-500 w-10 ml-40"> <i class="fa-solid fa-times"></i></button>
                     </div>
                 </div>
              `;
@@ -345,3 +347,22 @@ _room6.addEventListener("click",()=>{
 afficherEmployesZone("Salle d'archives", document.getElementById("container_archives"));
 })
 
+//function de supprimer une employer tant que s'affiche dans un zone
+
+document.addEventListener("click", function(e) {
+    if (e.target.closest(".supprimer")) {   
+        let card = e.target.closest(".card");
+        let id = card.dataset.id;
+
+        let employes = JSON.parse(localStorage.getItem("employer")) || [];
+        let emp = employes.find(e => e.id == id);
+
+        if (emp) {
+            emp.is_worked = false;
+            emp.zone_work = null;
+            localStorage.setItem("employer", JSON.stringify(employes));
+        }
+        card.remove();
+         window.location.reload();
+    }
+});
