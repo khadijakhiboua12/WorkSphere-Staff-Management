@@ -95,18 +95,19 @@ function ouvrirModalInfo(employe) {
     const role = infoModal.querySelector(".role");
     const email = infoModal.querySelector(".email");
     const phone = infoModal.querySelector(".phone");
-    const experienceContainer = infoModal.querySelector(".Experience"); // <-- ici
+    const Actuel=infoModal.querySelector(".Actuel");
+    const experienceContainer = infoModal.querySelector(".Experience");
 
     img.src = employe.Url;
     name.textContent = employe.Nom;
     role.textContent = employe.Role;
     email.textContent = employe.email;
     phone.textContent = employe.phone;
+    Actuel.textContent=employe.zone_work;
 
-    // Vider le container
+    
     experienceContainer.innerHTML = "";
 
-    // Boucle sur chaque expérience
     employe.Experience.forEach(exp => {
         const div = document.createElement("div");
         div.className = "p-2 border rounded-lg mb-2 w-full";
@@ -147,7 +148,7 @@ function addExperience() {
         <div class="grid grid-cols-2 gap-3 mt-3">
             <div>
                 <label class="block">Date Début</label>
-                <input type="date" name="dateDebut" class="w-full p-2 rounded-xl border">
+                <input type="date" name="dateDebut"  class="w-full p-2 rounded-xl border">
             </div>
             <div>
                 <label class="block">Date Fin</label>
@@ -178,7 +179,7 @@ const imgInput = document.getElementById('photoInput');
 const previewimg = document.getElementById('photoPreview');
 
 imgInput.addEventListener('change', (e) => {
-    previewimg.src = e.target.value;
+    previewimg.src = e.target.value || "Image_profile1.jpg";
     previewimg.classList.remove("hidden");
 });
 
@@ -200,7 +201,8 @@ function validateEmployeeForm() {
     const emailError = document.getElementById("emailError");
     const phoneError = document.getElementById("phoneError");
     const urlError = document.getElementById("urlError");
-
+    
+   
     const nameRegex = /^[A-Za-z\s]{3,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{8,15}$/;
@@ -225,28 +227,10 @@ function validateEmployeeForm() {
 
     const experienceDivs = document.querySelectorAll("#experience-container > div");
     for (let div of experienceDivs) {
-
-        const entreprise = div.querySelector("input[name='entreprise']");
-        const post = div.querySelector("input[name='post']");
-        const dateDebut = div.querySelector("input[name='dateDebut']");
-        const dateFin = div.querySelector("input[name='dateFin']");
-
-        if (!div.querySelector(".expError")) {
-            const span = document.createElement("span");
-            span.className = "text-red-600 text-sm expError";
-            div.appendChild(span);
-        }
-
-        const expError = div.querySelector(".expError");
-        expError.textContent = "";
-
-        if (
-            entreprise.value.trim() === "" ||
-            post.value.trim() === "" ||
-            dateDebut.value === "" ||
-            dateFin.value === ""
-        ) {
-            expError.textContent = "Tous les champs sont obligatoires";
+         const  dateDebut=div.querySelector('input[name="dateDebut"]').value;
+         const  dateFin=div.querySelector('input[name="dateFin"]').value;
+        if (new Date(dateDebut) > new Date(dateFin)) {
+              alert("La date de début doit être antérieure à la date de fin pour toutes les expérience");
             isValid = false;
         }
     }
@@ -476,7 +460,7 @@ modals.forEach(el => {
 // ============================================================
 //   les couleurs des zones
 // ============================================================
-function highlightEmptyZones() {
+function color_zone() {
     const zones = [
         { id: "container_reseption_", name: "Réception" },
         { id: "container_serveurs", name: "Salle des serveurs" },
@@ -511,4 +495,4 @@ function highlightEmptyZones() {
         }
     });
 }
-window.addEventListener("load", highlightEmptyZones);
+window.addEventListener("load",color_zone);
