@@ -64,10 +64,10 @@ function AfficherCarte(data) {
         if (!employe.is_worked) {
 
             div.innerHTML = `
-            <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 cursor-pointer card"> 
+            <div class="card rounded-xl p-4 m-2 flex items-center bg-red-400 gap-4 cursor-pointer" data-id="${employe.id}"> 
                 <img src="${employe.Url}" class="rounded-full w-20 h-20">
                 <div class="flex flex-col">
-                    <h5 class="font-bold text-lg">${employe.id}</h5>
+                    
                     <h2 class="font-bold text-lg">${employe.Nom}</h2> 
                     <p class="text-gray-600">${employe.Role}</p>
                 </div>
@@ -95,6 +95,7 @@ function ouvrirModalInfo(employe) {
     const role = infoModal.querySelector(".role");
     const email = infoModal.querySelector(".email");
     const phone = infoModal.querySelector(".phone");
+    const experienceContainer = infoModal.querySelector(".Experience"); // <-- ici
 
     img.src = employe.Url;
     name.textContent = employe.Nom;
@@ -102,8 +103,25 @@ function ouvrirModalInfo(employe) {
     email.textContent = employe.email;
     phone.textContent = employe.phone;
 
+    // Vider le container
+    experienceContainer.innerHTML = "";
+
+    // Boucle sur chaque expérience
+    employe.Experience.forEach(exp => {
+        const div = document.createElement("div");
+        div.className = "p-2 border rounded-lg mb-2 w-full";
+        div.innerHTML = `
+            <p><strong>Entreprise:</strong> ${exp.Entreprise}</p>
+            <p><strong>Post:</strong> ${exp.Post}</p>
+            <p><strong>Début:</strong> ${exp.dateDeub}</p>
+            <p><strong>Fin:</strong> ${exp.dateFin}</p>
+        `;
+        experienceContainer.appendChild(div);
+    });
+
     infoModal.classList.remove("hidden");
 }
+
 
 
 // ============================================================
@@ -369,10 +387,6 @@ function afficherEmployesZone(room_name, container_) {
 }
 
 
-
-
-
-
 // ============================================================
 // Afficher les employés déjà assignés dans les zones
 // ============================================================
@@ -387,7 +401,7 @@ function aficher_data() {
             const zone = document.getElementById(emp.zone_work);
 
             zone.innerHTML += `
-                <div class="card cursor-pointer bg-green-100 w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
+                <div class="card cursor-pointer bg-blue-500 w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
                     <img src="${emp.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
                         <h2 class="font-bold text-lg">${emp.Nom}</h2>
@@ -424,9 +438,9 @@ document.addEventListener("click", (e) => {
     const card = e.target.closest(".card");
     if (!card) return;
 
-    const id = card.dataset.id;
+    const id = parseInt(card.dataset.id); 
     let employes = JSON.parse(localStorage.getItem("employer")) || [];
-    let emp = employes.find(emp => emp.id == id);
+    let emp = employes.find(emp => emp.id ==id);
 
     // Si click sur le bouton supprimer
     if (e.target.closest(".supprimer")) {
@@ -439,7 +453,8 @@ document.addEventListener("click", (e) => {
         return;
     }
 
-    // Sinon clic ksur la carte → ouvrir le modal
+    // Sinon clic ksur la carte => ouvrir le modal
+   
     ouvrirModalInfo(emp);
 });
 
