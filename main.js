@@ -27,6 +27,8 @@ let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
         ]
     }
 ];
+
+
 let container = document.getElementById("cards-container");
 let container_reseption_ = document.getElementById("container_Réception")
 //fonction de setItem
@@ -38,15 +40,17 @@ setEmployer(tabEmployer);
 function getEmployer() {
     return JSON.parse(localStorage.getItem("employer") || []);
 }
-
-//Affichage la  cartes  de  la page
+ 
+//Affichage la  cartes  de  la page dans sidebare
 let data = getEmployer();
 function AfficherCarte(data) {
     container.innerHTML = "";
+    
     for (let i = 0; i < data.length; i++) {
+        const div = document.createElement('div');
         const employe = data[i];
         if (employe.is_worked == false) {
-            container.innerHTML += `
+            div.innerHTML = `
     <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
     <img src="${employe.Url}" class="rounded-full w-20 h-20">
    
@@ -59,6 +63,24 @@ function AfficherCarte(data) {
     
      `;
         }
+        container.appendChild(div);
+        div.addEventListener('click',()=>{
+            infoModal.classList.remove('hidden')
+
+            const name = infoModal.querySelector('.name')
+            const role = infoModal.querySelector('.role')
+            const email = infoModal.querySelector('.email')
+            const phone = infoModal.querySelector('.phone')
+            const img = infoModal.querySelector('img')
+
+            img.src = employe.Url
+            
+            name.textContent = employe.Nom
+            role.textContent = employe.Role
+            email.textContent = employe.email
+            phone.textContent = employe.phone
+            
+        })
     }
 
 }
@@ -93,6 +115,7 @@ function addExperience() {
     `;
     container.prepend(experienceDiv);
 }
+
 //function pour ajouter les employer
 function AddWorker(modalId) {
     const modal = document.getElementById(modalId);
@@ -101,33 +124,7 @@ function AddWorker(modalId) {
 document.getElementById("btn").addEventListener("click", () => AddWorker("modal"));
 document.getElementById("btncancel").addEventListener("click", () => AddWorker("modal"));
 
-//preview d'un image 
-function previewPhoto() {
-    const photoInput = document.getElementById("photoInput");
-    const photoPreview = document.getElementById("photoPreview");
-    const urlError = document.getElementById("urlError");
-    photoInput.addEventListener("input", function () {
-        const url = photoInput.value.trim();
-        const imageRegex = /^[\w,\s-]+\.(jpg|jpeg|png|gif)$/i;
 
-        if (url === "") {
-            photoPreview.src = "";
-            photoPreview.classList.add("hidden");
-            urlError.textContent = "";
-            return;
-        }
-        if (imageRegex.test(url)) {
-            photoPreview.src = url;
-            photoPreview.classList.remove("hidden");
-            urlError.textContent = "";
-        } else {
-            photoPreview.src = "";
-            photoPreview.classList.add("hidden");
-            urlError.textContent = "URL invalide ! Utilisez une image locale (jpg, png, gif).";
-        }
-    });
-}
-previewPhoto();
 
 //La fonction de validation de la formulaire
 function validateEmployeeForm() {
@@ -231,7 +228,7 @@ function saveEmployee() {
     document.getElementById("modal").classList.add("hidden");
     AfficherCarte(tabEmployer);
 }
-//La par de zone
+//La partie de zone
 let _room1 = document.getElementById("room1")
 let _room2 = document.getElementById("room2")
 let _room3 = document.getElementById("room3")
@@ -263,7 +260,7 @@ function afficherEmployesZone(room_name,container_) {
       if (emp.is_worked==false && rolesAcceptes.includes(emp.Role)) {
             
             container_.innerHTML += `
-                <div class="card cursor-pointer hover:bg-blue-100 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
+<div class="card cursor-pointer hover:bg-red-100 shadow-lg hover:shadow-xl rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
                     <img src="${emp.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
                         <h5 class="font-bold">${emp.id}</h5>
@@ -307,7 +304,7 @@ for(_data_ of employes ){
         if(_data_.is_worked){
 
    document.getElementById(_data_.zone_work).innerHTML+=
-              `<div class="card cursor-pointer bg-red-100  w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
+              `<div class="card cursor-pointer bg-red-100  w-80 bg-green-500 rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
                     <img src="${_data_.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
                        
@@ -349,7 +346,7 @@ afficherEmployesZone("Salle d'archives", document.getElementById("container_arch
 
 //function de supprimer une employer tant que s'affiche dans un zone
 
-document.addEventListener("click", function(e) {
+document.addEventListener("click", (e)=> {
     if (e.target.closest(".supprimer")) {   
         let card = e.target.closest(".card");
         let id = card.dataset.id;
@@ -366,3 +363,29 @@ document.addEventListener("click", function(e) {
          window.location.reload();
     }
 });
+
+// modals
+const modals = document.querySelectorAll('.modal');
+modals.forEach(el =>{
+    el.addEventListener('click',()=>{
+        el.classList.add('hidden')
+    })
+})
+const form =document.querySelector('form');
+ 
+
+//fonction de sorte que les zones vides obligatoires apparaissent en rouge pâle
+const zones = document.querySelectorAll(".principale"); // جميع الحقول/القاعات
+
+zones.forEach(zone => {
+  const isRequired = zone.dataset.required === "true"; // مثلا حطينا data-required="true"
+  const name = zone.dataset.name; // مثلا اسم القاعة
+  const value = zone.value.trim();
+
+  if (isRequired && value === "" && name !== "Salle de conférence" && name !== "Salle du personnel") {
+    zone.classList.add("bg-red-100");
+  } else {
+    zone.classList.remove("bg-red-100");
+  }
+});
+
