@@ -1,4 +1,6 @@
-//Tableau  contient les donnes 
+// ============================================================
+// Données initiales : Récupération ou création du tableau
+// ============================================================
 let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
     {
         id: 1,
@@ -28,95 +30,121 @@ let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
     }
 ];
 
-
 let container = document.getElementById("cards-container");
-let container_reseption_ = document.getElementById("container_Réception")
-//fonction de setItem
+
+
+// ============================================================
+// Sauvegarder employé dans localStorage
+// ============================================================
 function setEmployer(tabEmployer) {
     localStorage.setItem("employer", JSON.stringify(tabEmployer));
 }
 setEmployer(tabEmployer);
-//fonction de getItem
+
+// ============================================================
+// Récupérer les employées du localStorage
+// ============================================================
 function getEmployer() {
     return JSON.parse(localStorage.getItem("employer") || []);
 }
- 
-//Affichage la  cartes  de  la page dans sidebare
-let data = getEmployer();
+
+const infoModal = document.getElementById('info_');
+
+
+// ============================================================
+// Affichage de la liste principale des employés (sidebar)
+// ============================================================
 function AfficherCarte(data) {
     container.innerHTML = "";
-    
+
     for (let i = 0; i < data.length; i++) {
-        const div = document.createElement('div');
         const employe = data[i];
-        if (employe.is_worked == false) {
+        const div = document.createElement('div');
+
+        if (!employe.is_worked) {
+
             div.innerHTML = `
-    <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 "> 
-    <img src="${employe.Url}" class="rounded-full w-20 h-20">
-   
-     <div class=" flex flex-col">
-     <h5 class="id_card font-bold text-lg">${employe.id}</h5>
-     <h2 class="font-bold text-lg">${employe.Nom}</h2> 
-     <p class="text-gray-600">${employe.Role}</p>
-  </div>
-    </div>
-    
-     `;
+            <div class="shadow-lg rounded-xl p-4 m-2 flex items-center gap-4 cursor-pointer card"> 
+                <img src="${employe.Url}" class="rounded-full w-20 h-20">
+                <div class="flex flex-col">
+                    <h5 class="font-bold text-lg">${employe.id}</h5>
+                    <h2 class="font-bold text-lg">${employe.Nom}</h2> 
+                    <p class="text-gray-600">${employe.Role}</p>
+                </div>
+            </div>
+            `;
         }
+
         container.appendChild(div);
-        div.addEventListener('click',()=>{
-            infoModal.classList.remove('hidden')
 
-            const name = infoModal.querySelector('.name')
-            const role = infoModal.querySelector('.role')
-            const email = infoModal.querySelector('.email')
-            const phone = infoModal.querySelector('.phone')
-            const img = infoModal.querySelector('img')
 
-            img.src = employe.Url
-            
-            name.textContent = employe.Nom
-            role.textContent = employe.Role
-            email.textContent = employe.email
-            phone.textContent = employe.phone
-            
-        })
+        div.addEventListener('click', () => {
+            ouvrirModalInfo(employe);
+        });
     }
-
 }
 AfficherCarte(tabEmployer);
-//Fonction pour add plusieur expirience
+
+
+// ============================================================
+// Ouvrir le modal d'informations
+// ============================================================
+function ouvrirModalInfo(employe) {
+    const img = infoModal.querySelector("img");
+    const name = infoModal.querySelector(".name");
+    const role = infoModal.querySelector(".role");
+    const email = infoModal.querySelector(".email");
+    const phone = infoModal.querySelector(".phone");
+
+    img.src = employe.Url;
+    name.textContent = employe.Nom;
+    role.textContent = employe.Role;
+    email.textContent = employe.email;
+    phone.textContent = employe.phone;
+
+    infoModal.classList.remove("hidden");
+}
+
+
+// ============================================================
+// Ajouter une nouvelle expérience dans le formulaire
+// ============================================================
 function addExperience() {
     const container = document.getElementById("experience-container");
     const experienceDiv = document.createElement("div");
+
     experienceDiv.className = "p-4 border rounded-xl mb-4 bg-gray-100 w-full max-w-[900px]";
     experienceDiv.innerHTML = `
-        <div class="grid grid-cols-1 gap-3  ">
+        <div class="grid grid-cols-1 gap-3">
             <div>
                 <label class="block">Entreprise</label>
-                <input type="text" name="entreprise" class="w-full max-w-[200px] p-2 rounded-xl border border-gray-300">
+                <input type="text" name="entreprise" class="w-full p-2 rounded-xl border">
             </div>
             <div>
                 <label class="block">Post</label>
-                <input type="text" name="post" class="w-full max-w-[200px] p-2 rounded-xl border border-gray-300">
+                <input type="text" name="post" class="w-full p-2 rounded-xl border">
             </div>
         </div>
+
         <div class="grid grid-cols-2 gap-3 mt-3">
             <div>
                 <label class="block">Date Début</label>
-                <input type="date" name="dateDebut" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="date" name="dateDebut" class="w-full p-2 rounded-xl border">
             </div>
-
             <div>
                 <label class="block">Date Fin</label>
-                <input type="date"  name="dateFin" class="w-full p-2 rounded-xl border border-gray-300">
+                <input type="date" name="dateFin" class="w-full p-2 rounded-xl border">
             </div>
         </div>
     `;
+
     container.prepend(experienceDiv);
 }
 
-//function pour ajouter les employer
+
+// ============================================================
+// Ouvrir / fermer modal d'ajout employé
+// ============================================================
 function AddWorker(modalId) {
     const modal = document.getElementById(modalId);
     modal.classList.toggle("hidden");
@@ -125,27 +153,45 @@ document.getElementById("btn").addEventListener("click", () => AddWorker("modal"
 document.getElementById("btncancel").addEventListener("click", () => AddWorker("modal"));
 
 
+// ============================================================
+// Prévisualisation de l'image
+// ============================================================
+const imgInput = document.getElementById('photoInput');
+const previewimg = document.getElementById('photoPreview');
 
-//La fonction de validation de la formulaire
+imgInput.addEventListener('change', (e) => {
+    previewimg.src = e.target.value;
+    previewimg.classList.remove("hidden");
+});
+
+
+// ============================================================
+// Valider le formulaire d'ajout
+// ============================================================
 function validateEmployeeForm() {
+
     let isValid = true;
+
     const nom = document.getElementById("nomInput").value.trim();
     const role = document.getElementById("roleSelect").value;
     const url = document.getElementById("photoInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
     const phone = document.getElementById("phoneInput").value.trim();
+
     const nomError = document.getElementById("nomError");
     const emailError = document.getElementById("emailError");
     const phoneError = document.getElementById("phoneError");
     const urlError = document.getElementById("urlError");
+
     const nameRegex = /^[A-Za-z\s]{3,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{8,15}$/;
-    // const urlRegex = /^[\w,\s-]+\.(jpg|jpeg|png|gif)$/i;
+
     nomError.textContent = "";
     emailError.textContent = "";
     phoneError.textContent = "";
     urlError.textContent = "";
+
     if (!nameRegex.test(nom)) {
         nomError.textContent = "Nom invalide";
         isValid = false;
@@ -158,50 +204,62 @@ function validateEmployeeForm() {
         phoneError.textContent = "Numéro invalide !";
         isValid = false;
     }
-    // if (!urlRegex.test(url)) {
-    //     urlError.textContent = "URL invalide !";
-    //     isValid = false;
-    // }
+
     const experienceDivs = document.querySelectorAll("#experience-container > div");
-    for (let i = 0; i < experienceDivs.length; i++) {
-        const div = experienceDivs[i];
+    for (let div of experienceDivs) {
+
         const entreprise = div.querySelector("input[name='entreprise']");
         const post = div.querySelector("input[name='post']");
         const dateDebut = div.querySelector("input[name='dateDebut']");
         const dateFin = div.querySelector("input[name='dateFin']");
+
         if (!div.querySelector(".expError")) {
             const span = document.createElement("span");
             span.className = "text-red-600 text-sm expError";
             div.appendChild(span);
         }
+
         const expError = div.querySelector(".expError");
         expError.textContent = "";
-        if (entreprise.value.trim() === "" || post.value.trim() === "" || dateDebut.value === "" || dateFin.value === "") {
-            expError.textContent = `Tous les champs de l'expérience  sont obligatoires`;
+
+        if (
+            entreprise.value.trim() === "" ||
+            post.value.trim() === "" ||
+            dateDebut.value === "" ||
+            dateFin.value === ""
+        ) {
+            expError.textContent = "Tous les champs sont obligatoires";
             isValid = false;
         }
     }
+
     return isValid;
 }
+
 document.getElementById("btnsave").addEventListener("click", function (e) {
     e.preventDefault();
     if (validateEmployeeForm()) {
         saveEmployee();
-        alert("Employe sauvegarde avec succe ");
+        alert("Employé enregistré !");
     }
 });
 
-// Sauvegarder l'employer 
+
+// ============================================================
+// Sauvegarder nouvel employé
+// ============================================================
 function saveEmployee() {
+
     const nom = document.getElementById("nomInput").value;
     const role = document.getElementById("roleSelect").value;
     const url = document.getElementById("photoInput").value;
     const email = document.getElementById("emailInput").value;
     const phone = document.getElementById("phoneInput").value;
+
     const experienceDivs = document.querySelectorAll("#experience-container > div");
     const experiences = [];
-    for (let i = 0; i < experienceDivs.length; i++) {
-        const div = experienceDivs[i];
+
+    for (let div of experienceDivs) {
         experiences.push({
             Entreprise: div.querySelector("input[name='entreprise']").value,
             Post: div.querySelector("input[name='post']").value,
@@ -209,6 +267,7 @@ function saveEmployee() {
             dateFin: div.querySelector("input[name='dateFin']").value
         });
     }
+
     const newEmployee = {
         id: tabEmployer.length + 1,
         Nom: nom,
@@ -219,16 +278,22 @@ function saveEmployee() {
         Experience: experiences,
         is_worked: false,
         zone_work: null
-
     };
+
     tabEmployer.push(newEmployee);
     setEmployer(tabEmployer);
+
     document.getElementById("employeForm").reset();
     document.getElementById("experience-container").innerHTML = "";
     document.getElementById("modal").classList.add("hidden");
+
     AfficherCarte(tabEmployer);
 }
-//La partie de zone
+
+
+// ============================================================
+// Variables des rooms
+// ============================================================
 let _room1 = document.getElementById("room1")
 let _room2 = document.getElementById("room2")
 let _room3 = document.getElementById("room3")
@@ -237,155 +302,161 @@ let _room5 = document.getElementById("room5")
 let _room6 = document.getElementById("room6")
 
 
+// ============================================================
+// Affichage des employés dans une zone + assignation
+// ============================================================
+function afficherEmployesZone(room_name, container_) {
+    const maxPerZone = {
+        "Reception": 3,
+        "Salle des serveurs": 2,
+        "Salle de sécurité": 2,
+        "Salle du personnel": 5,
+        "Salle de conférence": 4,
+        "Salle d'archives": 1
+    };
 
-
-
-function afficherEmployesZone(room_name,container_) {
 
     const roles_zone = {
-    "Reception": ["Manager", "Réceptionniste", "Nettoyage"],
-    "Salle des serveurs": ["Manager", "Technicien IT", "Nettoyage"],
-    "Salle de sécurité": ["Manager", "Agent de sécurité", "Nettoyage"],
-    "Salle du personnel": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
-    "Salle de conférence": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
-    "Salle d'archives": ["Manager"]
-};
+        "Reception": ["Manager", "Réceptionniste", "Nettoyage"],
+        "Salle des serveurs": ["Manager", "Technicien IT", "Nettoyage"],
+        "Salle de sécurité": ["Manager", "Agent de sécurité", "Nettoyage"],
+        "Salle du personnel": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
+        "Salle de conférence": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
+        "Salle d'archives": ["Manager"]
+    };
 
-    container_.innerHTML = "";
     let employes = JSON.parse(localStorage.getItem("employer")) || [];
     let rolesAcceptes = roles_zone[room_name] || [];
+    let assignedCount = employes.filter(emp => emp.zone_work === container_.id).length;
+
     
-    for (let i = 0; i < employes.length; i++) {
-        let emp = employes[i];
-      if (emp.is_worked==false && rolesAcceptes.includes(emp.Role)) {
-            
-            container_.innerHTML += `
-<div class="card cursor-pointer hover:bg-red-100 shadow-lg hover:shadow-xl rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
+    if (assignedCount >= (maxPerZone[room_name] || 10)) {
+        alert(`Limite d'employés pour ${room_name} atteinte !`);
+        return;
+    }
+
+    // Préparer modal d’assignation
+    const assignModal = document.getElementById("assign");
+    assignModal.innerHTML = `<div class="bg-white p-4 rounded-xl min-w-[300px] min-h-[400px] flex flex-col items-center">
+    <h2 class="font-bold mb-4">Assigner un employé à ${room_name}</h2>
+    <div id="listEmployee" class="flex flex-col gap-2 w-full max-h-[300px] overflow-y-auto"></div>
+    <button onclick="document.getElementById('assign').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl">Close</button>
+</div>`;
+
+    const listEmployee = document.getElementById("listEmployee");
+
+    for (let emp of employes) {
+        if (!emp.is_worked && rolesAcceptes.includes(emp.Role)) {
+            const div = document.createElement("div");
+            div.className = "card cursor-pointer bg-red-500 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4";
+            div.innerHTML = `<img src="${emp.Url}" class="rounded-full w-20 h-20">
+            <div class="flex flex-col">
+                <h5 class="font-bold">${emp.id}</h5>
+                <h2 class="font-bold text-lg">${emp.Nom}</h2>
+                <p class="text-gray-600">${emp.Role}</p>
+            </div>`;
+            div.addEventListener("click", () => {
+                emp.is_worked = true;
+                emp.zone_work = container_.id;
+                localStorage.setItem("employer", JSON.stringify(employes));
+                assignModal.classList.add("hidden");
+                window.location.reload();
+            });
+            listEmployee.appendChild(div);
+        }
+    }
+    assignModal.classList.remove("hidden");
+}
+
+
+
+
+
+
+// ============================================================
+// Afficher les employés déjà assignés dans les zones
+// ============================================================
+function aficher_data() {
+
+    let employes = JSON.parse(localStorage.getItem("employer")) || [];
+
+    for (let emp of employes) {
+
+        if (emp.is_worked) {
+
+            const zone = document.getElementById(emp.zone_work);
+
+            zone.innerHTML += `
+                <div class="card cursor-pointer bg-green-100 w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
                     <img src="${emp.Url}" class="rounded-full w-20 h-20">
                     <div class="flex flex-col">
-                        <h5 class="font-bold">${emp.id}</h5>
                         <h2 class="font-bold text-lg">${emp.Nom}</h2>
                         <p class="text-gray-600">${emp.Role}</p>
-                      
+                        <button class="supprimer rounded-lg bg-red-500 w-10 ml-40">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
                     </div>
                 </div>
             `;
         }
     }
 
-   
-    container_.addEventListener("click",function (e){
-        let card = e.target.closest(".card");
-        if (!card) return;
-        let id = parseInt(card.getAttribute("data-id"));
-        let data = JSON.parse(localStorage.getItem("employer")) || [];
-
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].id === id) {
-                data[i].is_worked = true;
-                data[i].zone_work = container_.id;
-                window.location.reload();
-                break;
-                
-            }
-        }
-
-        localStorage.setItem("employer", JSON.stringify(data));
-        AfficherCarte(data);
-        afficherEmployesZone(room_name, container_);
-        alert("Employé affecté à " + room_name);
-    });
 }
+aficher_data();
 
-function  aficher_data(){
+
+// ============================================================
+// Click sur les rooms
+// ============================================================
+_room1.addEventListener("click", () => afficherEmployesZone("Salle de conférence", document.getElementById("container_conference")));
+_room2.addEventListener("click", () => afficherEmployesZone("Reception", document.getElementById("container_reseption_")));
+_room3.addEventListener("click", () => afficherEmployesZone("Salle des serveurs", document.getElementById("container_serveurs")));
+_room4.addEventListener("click", () => afficherEmployesZone("Salle de sécurité", document.getElementById("container_securite")));
+_room5.addEventListener("click", () => afficherEmployesZone("Salle du personnel", document.getElementById("container_personnel")));
+_room6.addEventListener("click", () => afficherEmployesZone("Salle d'archives", document.getElementById("container_archives")));
+
+
+// ============================================================
+// Suppression d'un employé depuis une zone
+// ============================================================
+document.addEventListener("click", (e) => {
+
+    const card = e.target.closest(".card");
+    if (!card) return;
+
+    const id = card.dataset.id;
     let employes = JSON.parse(localStorage.getItem("employer")) || [];
-for(_data_ of employes ){
+    let emp = employes.find(emp => emp.id == id);
 
-        if(_data_.is_worked){
-
-   document.getElementById(_data_.zone_work).innerHTML+=
-              `<div class="card cursor-pointer bg-red-100  w-80 bg-green-500 rounded-xl p-4 m-2 flex items-center gap-4" data-id="${_data_.id}">
-                    <img src="${_data_.Url}" class="rounded-full w-20 h-20">
-                    <div class="flex flex-col">
-                       
-                        <h2 class="font-bold text-lg">${_data_.Nom}</h2>
-                        <p class="text-gray-600">${_data_.Role}</p>
-                          <button  class="supprimer rounded-lg bg-red-500 w-10 ml-40"> <i class="fa-solid fa-times"></i></button>
-                    </div>
-                </div>
-             `;
-    }
-}
-}
-
-_room1.addEventListener("click",()=>{
-afficherEmployesZone("Salle de conférence", document.getElementById("container_conference"))
-
-})
-aficher_data()
-_room2.addEventListener("click",()=>{
-afficherEmployesZone("Reception",document.getElementById("container_reseption_"))
-
-})
-_room3.addEventListener("click",()=>{
-afficherEmployesZone("Salle des serveurs",document.getElementById("container_serveurs"))
-})
-
-_room4.addEventListener("click",()=>{
-    afficherEmployesZone("Salle de sécurité", document.getElementById("container_securite"));
-})
-
-_room5.addEventListener("click",()=>{
-afficherEmployesZone("Salle du personnel", document.getElementById("container_personnel"));
-})
-
-
-_room6.addEventListener("click",()=>{
-afficherEmployesZone("Salle d'archives", document.getElementById("container_archives"));
-})
-
-//function de supprimer une employer tant que s'affiche dans un zone
-
-document.addEventListener("click", (e)=> {
-    if (e.target.closest(".supprimer")) {   
-        let card = e.target.closest(".card");
-        let id = card.dataset.id;
-
-        let employes = JSON.parse(localStorage.getItem("employer")) || [];
-        let emp = employes.find(e => e.id == id);
-
+    // Si click sur le bouton supprimer
+    if (e.target.closest(".supprimer")) {
         if (emp) {
             emp.is_worked = false;
             emp.zone_work = null;
-            localStorage.setItem("employer", JSON.stringify(employes));
         }
-        card.remove();
-         window.location.reload();
+        localStorage.setItem("employer", JSON.stringify(employes));
+        window.location.reload();
+        return;
     }
+
+    // Sinon clic ksur la carte → ouvrir le modal
+    ouvrirModalInfo(emp);
 });
 
-// modals
+
+
+
+
+// ============================================================
+// Fermer modals au clic
+// ============================================================
 const modals = document.querySelectorAll('.modal');
-modals.forEach(el =>{
-    el.addEventListener('click',()=>{
-        el.classList.add('hidden')
-    })
-})
-const form =document.querySelector('form');
- 
 
-//fonction de sorte que les zones vides obligatoires apparaissent en rouge pâle
-const zones = document.querySelectorAll(".principale"); // جميع الحقول/القاعات
-
-zones.forEach(zone => {
-  const isRequired = zone.dataset.required === "true"; // مثلا حطينا data-required="true"
-  const name = zone.dataset.name; // مثلا اسم القاعة
-  const value = zone.value.trim();
-
-  if (isRequired && value === "" && name !== "Salle de conférence" && name !== "Salle du personnel") {
-    zone.classList.add("bg-red-100");
-  } else {
-    zone.classList.remove("bg-red-100");
-  }
+modals.forEach(el => {
+    el.addEventListener('click', () => {
+        el.classList.add('hidden');
+    });
 });
-
+// ============================================================
+// Fermer modals au clic
+// ============================================================
