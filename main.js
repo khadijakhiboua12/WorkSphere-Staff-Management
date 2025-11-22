@@ -472,6 +472,43 @@ modals.forEach(el => {
         el.classList.add('hidden');
     });
 });
+
 // ============================================================
-// Fermer modals au clic
+//   les couleurs des zones
 // ============================================================
+function highlightEmptyZones() {
+    const zones = [
+        { id: "container_reseption_", name: "Réception" },
+        { id: "container_serveurs", name: "Salle des serveurs" },
+        { id: "container_securite", name: "Salle de sécurité" },
+        { id: "container_personnel", name: "Salle du personnel" },
+        { id: "container_conference", name: "Salle de conférence" },
+        { id: "container_archives", name: "Salle d'archives" }
+    ];
+
+    const excluded = ["Salle de conférence", "Salle du personnel"];
+    let employes = JSON.parse(localStorage.getItem("employer")) || [];
+    zones.forEach(zoneInfo => {
+        const container = document.getElementById(zoneInfo.id);
+        if (!container) return;
+        const parentZone = container.parentElement; 
+        const employesDansZone = employes.filter(emp => emp.zone_work === zoneInfo.id).length;
+        if (employesDansZone === 0) {
+            if (excluded.includes(zoneInfo.name)) {           
+                parentZone.style.backgroundColor = "#d1fae5"; 
+                parentZone.style.border = "1px solid #34d399"; 
+            } else {
+        
+                parentZone.style.backgroundColor = "#fee2e2"; 
+                parentZone.style.border = "1px solid #f87171"; 
+            }
+            parentZone.style.borderRadius = "12px";
+            parentZone.style.padding = "10px";
+        } else {          
+            parentZone.style.backgroundColor = "";
+            parentZone.style.border = "";
+            parentZone.style.padding = "10px";
+        }
+    });
+}
+window.addEventListener("load", highlightEmptyZones);
