@@ -196,41 +196,65 @@ function validateEmployeeForm() {
     const url = document.getElementById("photoInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
     const phone = document.getElementById("phoneInput").value.trim();
-
-    const nomError = document.getElementById("nomError");
+    const nomError   = document.getElementById("nomError");
     const emailError = document.getElementById("emailError");
     const phoneError = document.getElementById("phoneError");
-    const urlError = document.getElementById("urlError");
-    
-   
-    const nameRegex = /^[A-Za-z\s]{3,20}$/;
+    const urlError   = document.getElementById("urlError");
+    const nameRegex  = /^[A-Za-z\s]{3,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{8,15}$/;
-
     nomError.textContent = "";
     emailError.textContent = "";
     phoneError.textContent = "";
-    urlError.textContent = "";
 
     if (!nameRegex.test(nom)) {
         nomError.textContent = "Nom invalide";
         isValid = false;
     }
+
     if (!emailRegex.test(email)) {
         emailError.textContent = "Email invalide !";
         isValid = false;
     }
+
     if (!phoneRegex.test(phone)) {
         phoneError.textContent = "Numéro invalide !";
         isValid = false;
     }
 
     const experienceDivs = document.querySelectorAll("#experience-container > div");
+
     for (let div of experienceDivs) {
-         const  dateDebut=div.querySelector('input[name="dateDebut"]').value;
-         const  dateFin=div.querySelector('input[name="dateFin"]').value;
-        if (new Date(dateDebut) > new Date(dateFin)) {
-              alert("La date de début doit être antérieure à la date de fin pour toutes les expérience");
+
+        const entreprise = div.querySelector("input[name='entreprise']");
+        const post       = div.querySelector("input[name='post']");
+        const dateDebut  = div.querySelector("input[name='dateDebut']");
+        const dateFin    = div.querySelector("input[name='dateFin']");
+
+        
+        let expError = div.querySelector(".expError");
+        if (!expError) {
+            expError = document.createElement("span");
+            expError.className = "text-red-600 text-sm expError";
+            div.appendChild(expError);
+        }
+        expError.textContent = "";
+
+        
+        if (
+            entreprise.value.trim() === "" ||
+            post.value.trim() === "" ||
+            dateDebut.value === "" ||
+            dateFin.value === ""
+        ) {
+            expError.textContent = "Tous les champs de l'expérience sont obligatoires";
+            isValid = false;
+            continue;
+        }
+
+       
+        if (new Date(dateDebut.value) > new Date(dateFin.value)) {
+            expError.textContent = "Date début doit être  inferieur a date fin";
             isValid = false;
         }
     }
@@ -238,11 +262,14 @@ function validateEmployeeForm() {
     return isValid;
 }
 
+
+
 document.getElementById("btnsave").addEventListener("click", function (e) {
     e.preventDefault();
+
     if (validateEmployeeForm()) {
         saveEmployee();
-        alert("Employé enregistré !");
+        alert("Employé enregistré avec succès !");
     }
 });
 
@@ -385,15 +412,15 @@ function aficher_data() {
             const zone = document.getElementById(emp.zone_work);
 
             zone.innerHTML += `
-                <div class="card cursor-pointer bg-blue-500 w-80 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4" data-id="${emp.id}">
-                    <img src="${emp.Url}" class="rounded-full w-20 h-20">
+                <div class=" mt-2 card cursor-pointer bg-blue-500 w-full max-w-[12rem] shadow-lg rounded-xl p-2 flex items-center justify-between " data-id="${emp.id}">
+                    <img src="${emp.Url}" class="rounded-full w-12 h-12">
                     <div class="flex flex-col">
-                        <h2 class="font-bold text-lg">${emp.Nom}</h2>
-                        <p class="text-gray-600">${emp.Role}</p>
-                        <button class="supprimer rounded-lg bg-red-500 w-10 ml-40">
-                            <i class="fa-solid fa-times"></i>
-                        </button>
+                        <h2 class="font-bold text-sm">${emp.Nom}</h2>
+                        <p class="text-gray-600 text-[0.6rem]">${emp.Role}</p>
                     </div>
+                    <button class="supprimer rounded-lg bg-red-500 w-4">
+                            <i class="fa-solid fa-times"></i>
+                    </button>
                 </div>
             `;
         }
@@ -479,11 +506,11 @@ function color_zone() {
         const employesDansZone = employes.filter(emp => emp.zone_work === zoneInfo.id).length;
         if (employesDansZone === 0) {
             if (excluded.includes(zoneInfo.name)) {           
-                parentZone.style.backgroundColor = "#d1fae5"; 
+                parentZone.style.backgroundColor = "rgba(209, 250, 229, 0.5)"; 
                 parentZone.style.border = "1px solid #34d399"; 
             } else {
         
-                parentZone.style.backgroundColor = "#fee2e2"; 
+                parentZone.style.backgroundColor = "rgba(254, 226, 226, 0.5)"; 
                 parentZone.style.border = "1px solid #f87171"; 
             }
             parentZone.style.borderRadius = "12px";

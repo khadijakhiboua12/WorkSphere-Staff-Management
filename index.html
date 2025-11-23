@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,153 +8,168 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-</head> 
+</head>
+
 <body>
- <main>
-    <div class="layout">    
-        <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
-            <h1 class="ml-14  font-bold text-[30px]">WorkSphere</h1>
-            <div class="bg-green-500 p-2 mt-10 rounded-xl">
-                <button id="btn" class="ml-10">
-                    <i class="fas fa-plus"></i> Add New Worker
+    <main>
+        <div class="layout">
+            <!-- Sidebar -->
+            <div id="sidebar" class="sidebar">
+                <h1 class="ml-14  font-bold text-[30px]">WorkSphere</h1>
+                <div class="bg-green-500 p-2 mt-10 rounded-xl">
+                    <button id="btn" class="ml-10">
+                        <i class="fas fa-plus"></i> Add New Worker
+                    </button>
+                </div>
+                <!-- Cards -->
+                <div id="cards-container"></div>
+            </div>
+            <!-- Main content -->
+            <div class="main relative w-full overflow-y-hidden">
+               <div class="zone">
+                    <img src="Image_background.jpg" alt="" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 grid grid-cols-[38%_17%_22%_22%] grid-rows-[34%_32.5%_32.5%] ">
+                        <div class="room1">
+
+                            <div class="flex flex-col min-h-full bg-opac">
+                                <h1 class="font-bold flex justify-center">Salle de conférence</h1>
+                                <div class="flex justify-center mt-2"> <button id="room1"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_conference"
+                                    style="max-height:200px; margin-left:102px; overflow-y: scroll;"></div>
+                                <div id="staffRoom"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="room2">
+                            <div class="flex flex-col min-h-full">
+                                <h1 class="font-bold flex justify-center">Réception</h1>
+                                <div class="flex justify-center mt-2"> <button id="room2"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_reseption_"
+                                    style="max-height:200px;  margin-left:20px; overflow-y: scroll;"></div>
+                                <div id="staffRoom"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="room3">
+                            <div class="flex flex-col min-h-full">
+                                <h1 class="font-bold flex justify-center">Salle des serveurs</h1>
+                                <div class="flex justify-center mt-2"> <button id="room3"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_serveurs" style="max-height:200px;  overflow-y: scroll;"></div>
+                            </div>
+                        </div>
+
+                        <div class="room4">
+                            <div class="flex flex-col min-h-full">
+                                <h1 class="font-bold flex justify-center">Salle de sécurité</h1>
+                                <div class="flex justify-center mt-2"> <button id="room4"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_securite"
+                                    style="max-height:200px; margin-left:90px; overflow-y: scroll;"></div>
+                            </div>
+                        </div>
+                        <div class="room5">
+                            <div class="flex flex-col min-h-full">
+                                <h1 class="font-bold flex justify-center ">Salle du personnel</h1>
+                                <div class="flex justify-center mt-2"> <button id="room5"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_personnel"
+                                    style="max-height:200px; margin-left:20px; overflow-y: scroll;"></div>
+                            </div>
+                        </div>
+                        <div class="room6 principale ">
+                            <div class="flex flex-col min-h-full">
+                                <h1 class="font-bold flex justify-center ">Salle d’archives</h1>
+                                <div class="flex justify-center mt-2"> <button id="room6"
+                                        class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
+                                <div id="container_archives" class="flex felx-justifiy-center"
+                                    style="max-height:200px;  margin-left:20px; overflow-y: scroll;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+
+    <div id="modal" class=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-3 w-full max-w-[500px] h-[600px]
+        rounded-xl border border-gray-300 bg-white z-50 overflow-y-auto hidden">
+        <h1 class="mx-auto text-center  mt-2">Worker Info</h1>
+        <form id="employeForm" class="flex flex-col items-start gap-2 mx-auto  mt-10   ">
+            <label class="w-full max-w-[240px] text-left">Nom:</label>
+            <input id="nomInput" type="text" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300 ">
+            <span class="text-red-600 text-sm error-message" id="nomError"></span>
+            <label class="w-full max-w-[240px] text-left">Role:</label>
+            <select id="roleSelect" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300">Role
+                <option>Réceptionniste</option>
+                <option>Technicien IT</option>
+                <option>Manager</option>
+                <option>Nettoyage</option>
+                <option>Agent de sécurité</option>
+            </select>
+
+
+            <label>Photo(url)</label>
+            <div class="w-full max-w-[300px] flex items-center gap-4">
+                <input type="url" id="photoInput" placeholder="Entrez URL photo"
+                    class="flex-1 p-3 rounded-xl border border-gray-300" />
+
+                <div class="w-[250px] h-[90px] rounded-full border-4 border-gray-300 flex items-center justify-center">
+                    <img id="photoPreview" src="" class="w-15 h-15 rounded-xl object-cover hidden">
+                </div>
+            </div>
+            <span class="text-red-600 text-sm error-message" id="urlError"></span>
+
+            <label class="w-full max-w-[240px] text-left">Email:</label>
+            <input id="emailInput" type="email" class="w-full max-w-[500px] p-3 rounded-xl border border-gray-300">
+            <span id="emailError" class="text-red-600 text-sm"></span>
+            <label class="w-full max-w-[240px] text-left">Phone:</label>
+            <input type="text" id="phoneInput" class="w-full max-w-[590px]  p-3 rounded-xl border border-gray-300">
+            <span id="phoneError" class="text-red-600 text-sm"></span>
+
+            <div class="w-full max-w-[300px] flex flex-col items-center ml-20">
+
+                <div id="experience-container" class="mt-4 ml-8"></div>
+
+                <button type="button" onclick="addExperience()"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-xl w-full max-w-[240px] mt-3 text-center">
+                    <i class="fas fa-plus"></i>Ajouter une expérience
                 </button>
             </div>
-            <!-- Cards -->
-            <div id="cards-container"></div>
-        </div>
-        <!-- Main content -->
-        <div class="main"> 
-            <div class="zone" >
-                <div class="room1">
 
-                <div class="flex flex-col" >
-                    <h1 class="font-bold flex justify-center">Salle de conférence</h1>
-                    <div class="flex justify-center mt-2"> <button id="room1" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_conference"   style="max-height:200px; margin-left:102px; overflow-y: scroll;"></div>
-                      <div id="staffRoom"></div>
-                </div>
 
-                </div>
-
-                <div class="room2">
-                <div class="flex flex-col">
-                    <h1 class="font-bold flex justify-center">Réception</h1>
-                    <div class="flex justify-center mt-2"> <button id="room2" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                    <div id="container_reseption_"  style="max-height:200px;  margin-left:20px; overflow-y: scroll;"></div>
-                    <div id="staffRoom"></div>
+            <div class="w-full flex justify-center gap-6 mt-4">
+                <button id="btnsave" type="submit" class="px-6 py-3 rounded-xl bg-green-800 text-white"> Save </button>
+                <button id="btncancel" type="button" class="px-6 py-3 rounded-xl bg-red-800 text-white"> Cancel</button>
             </div>
-
-                </div>
-
-                <div class="room3">
-                  <div class="flex flex-col">
-                    <h1 class="font-bold flex justify-center">Salle des serveurs</h1>
-                    <div class="flex justify-center mt-2"> <button id="room3" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_serveurs"  style="max-height:200px;  overflow-y: scroll;"></div>
-                </div>
-                </div>
-
-                <div class="room4">
-                    <div class="flex flex-col">
-                    <h1 class="font-bold flex justify-center">Salle de sécurité</h1>
-                    <div class="flex justify-center mt-2"> <button id="room4" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_securite" style="max-height:200px; margin-left:90px; overflow-y: scroll;"></div>
-            </div>
-                </div>
-                <div class="room5">
-                    <div class="flex flex-col">
-                    <h1 class="font-bold flex justify-center mt-9">Salle du personnel</h1>
-                    <div class="flex justify-center mt-6"> <button id="room5" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_personnel" style="max-height:200px; margin-left:20px; overflow-y: scroll;"></div>
-            </div>
-                </div>
-                <div class="room6 principale">
-                    <div class="flex flex-col">
-                    <h1 class="font-bold flex justify-center mt-9">Salle d’archives</h1>
-                    <div class="flex justify-center mt-6"> <button id="room6" class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
-                      <div id="container_archives" class="flex felx-justifiy-center" style="max-height:200px;  margin-left:20px; overflow-y: scroll;"></div>
-            </div>
-                </div>
-            </div>
-            </div>
-        </div> 
-    </div> 
-</main>
-
-
-<div id="modal" class=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-3 w-full max-w-[500px] h-[600px]
-        rounded-xl border border-gray-300 bg-white z-50 overflow-y-auto hidden">
-    <h1 class="mx-auto text-center  mt-2">Worker Info</h1>
-    <form   id="employeForm" class="flex flex-col items-start gap-2 mx-auto  mt-10   ">
-        <label class="w-full max-w-[240px] text-left">Nom:</label>
-        <input id="nomInput" type="text" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300 ">
-        <span class="text-red-600 text-sm error-message" id="nomError"></span>
-        <label class="w-full max-w-[240px] text-left">Role:</label>
-        <select   id="roleSelect" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300">Role
-            <option>Réceptionniste</option>
-            <option>Technicien IT</option>
-            <option>Manager</option>
-            <option>Nettoyage</option>
-            <option>Agent de sécurité</option>
-        </select>
-        
-
-    <label>Photo(url)</label>
-    <div class="w-full max-w-[300px] flex items-center gap-4">
-    <input  type="url"  id="photoInput" placeholder="Entrez URL photo" class="flex-1 p-3 rounded-xl border border-gray-300"/>
-
-    <div class="w-[250px] h-[90px] rounded-full border-4 border-gray-300 flex items-center justify-center">
-    <img  id="photoPreview"  src="" class="w-15 h-15 rounded-xl object-cover hidden">
+        </form>
     </div>
-   </div>
-    <span class="text-red-600 text-sm error-message" id="urlError"></span>
-      
-  <label class="w-full max-w-[240px] text-left">Email:</label>
-        <input id="emailInput" type="email"  class="w-full max-w-[500px] p-3 rounded-xl border border-gray-300">
-        <span id="emailError" class="text-red-600 text-sm"></span>
-        <label  class="w-full max-w-[240px] text-left">Phone:</label>
-        <input type="text"  id="phoneInput" class="w-full max-w-[590px]  p-3 rounded-xl border border-gray-300">
-        <span id="phoneError" class="text-red-600 text-sm"></span> 
-          
-        <div class="w-full max-w-[300px] flex flex-col items-center ml-20">
-    
-     <div id="experience-container" class="mt-4 ml-8"></div>
-
-    <button 
-        type="button"  
-        onclick="addExperience()"  
-        class="bg-blue-600 text-white px-4 py-2 rounded-xl w-full max-w-[240px] mt-3 text-center">
-        <i class="fas fa-plus"></i>Ajouter une expérience
-    </button>
-</div>
-   
-       
-        <div class="w-full flex justify-center gap-6 mt-4">
-        <button id="btnsave" type="submit" class="px-6 py-3 rounded-xl bg-green-800 text-white"> Save </button>
-       <button id="btncancel" type="button"  class="px-6 py-3 rounded-xl bg-red-800 text-white"> Cancel</button>
-       </div>
- </form>
-</div>
-<div id="info_" class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/30 flex justify-center items-center hidden">
-    <div class="bg-white flex flex-col p-3 justify-center items-center min-w-[300px] min-h-[400px] rounded-xl">
-        <img src="" alt="" class="rounded-full w-50 h-50">
-        <p>name: <span class="name"></span></p>
-        <p>role: <span class="role"></span></p>
-        <p>phone: <span class="phone"></span></p>
-        <p>email: <span class="email"></span></p>
-        <p>Actual Place:<span class="Actuel"></span></p>
-        <div class="Experience mt-2 w-full"></div>
-    </div> 
-</div>
-<div id="assign" class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/10 flex justify-center items-center">
-</div>
+    <div id="info_"
+        class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/30 flex justify-center items-center hidden">
+        <div class="bg-white flex flex-col p-3 justify-center items-center min-w-[300px] min-h-[400px] rounded-xl">
+            <img src="" alt="" class="rounded-full w-50 h-50">
+            <p>name: <span class="name"></span></p>
+            <p>role: <span class="role"></span></p>
+            <p>phone: <span class="phone"></span></p>
+            <p>email: <span class="email"></span></p>
+            <p>Actual Place:<span class="Actuel"></span></p>
+            <div class="Experience mt-2 w-full"></div>
+        </div>
+    </div>
+    <div id="assign" class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/10 flex justify-center items-center">
+    </div>
     <!-- <div class="bg-red-800 flex flex-col p-3 justify-center items-center min-w-[300px] min-h-[400px] rounded-xl">
         <p>worker to assign</p>
         <div id="listEmployee"></div>
     </div>  -->
 
-<script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
