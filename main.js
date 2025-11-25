@@ -64,8 +64,8 @@ function AfficherCarte(data) {
         if (!employe.is_worked) {
 
             div.innerHTML = `
-            <div class="card rounded-xl p-4 m-2 flex items-center bg-red-400 gap-4 cursor-pointer" data-id="${employe.id}"> 
-                <img src="${employe.Url}" class="rounded-full w-20 h-20">
+            <div class="card rounded-xl p-2 md:p-4 m-2 flex items-center bg-red-400 gap-1 md:gap-4 cursor-pointer" data-id="${employe.id}"> 
+                <img src="${employe.Url}" class="rounded-full w-12 h-12 md:w-20 md:h-20">
                 <div class="flex flex-col">
                     
                     <h2 class="font-bold text-lg">${employe.Nom}</h2> 
@@ -349,9 +349,9 @@ function afficherEmployesZone(room_name, container_) {
         "Reception": ["Manager", "Réceptionniste", "Nettoyage"],
         "Salle des serveurs": ["Manager", "Technicien IT", "Nettoyage"],
         "Salle de sécurité": ["Manager", "Agent de sécurité", "Nettoyage"],
-        "Salle du personnel": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
-        "Salle de conférence": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres"],
-        "Salle d'archives": ["Manager"]
+        "Salle du personnel": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres Roles"],
+        "Salle de conférence": ["Manager", "Réceptionniste", "Technicien IT", "Agent de sécurité", "Nettoyage", "Autres Roles"],
+        "Salle d'archives": ["Manager","Autres Roles"]
     };
 
     let employes = JSON.parse(localStorage.getItem("employer")) || [];

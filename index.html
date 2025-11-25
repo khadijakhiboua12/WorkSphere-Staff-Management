@@ -5,29 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorkSphere App</title>
+     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
 </head>
-
-<body>
-    <main>
-        <div class="layout">
-            <!-- Sidebar -->
-            <div id="sidebar" class="sidebar">
-                <h1 class="ml-14  font-bold text-[30px]">WorkSphere</h1>
-                <div class="bg-green-500 p-2 mt-10 rounded-xl">
-                    <button id="btn" class="ml-10">
-                        <i class="fas fa-plus"></i> Add New Worker
-                    </button>
-                </div>
-                <!-- Cards -->
-                <div id="cards-container"></div>
+<body class="overflow-hidden">
+    <main >
+        <div class="layout flex-col  md:flex-row">
+           
+            <div id="sidebar" class="sidebar w-1/4 md:w-1/5 h-screen bg-green-700 p-2 flex flex-col items-center">
+                <h1 class="  font-bold text-[30px]">WorkSphere</h1>
+                <button id="btn" class="w-full bg-green-500 p-2 mt-10 rounded-xl">
+                    <i class="fas fa-plus"></i> Add New Worker
+                </button>
+               
+                <div id="cards-container" class="overflow-y-auto h-full"></div>
             </div>
-            <!-- Main content -->
-            <div class="main relative w-full overflow-y-hidden">
-               <div class="zone">
-                    <img src="Image_background.jpg" alt="" class="w-full h-full object-cover">
+           
+            <div class="main relative w-full overflow-y-hidden ">
+               
+                    <img src="Image_background.jpg" alt="" class="absolute top-0 left-0 w-full h-full">
                     <div class="absolute inset-0 grid grid-cols-[38%_17%_22%_22%] grid-rows-[34%_32.5%_32.5%] ">
                         <div class="room1">
 
@@ -91,14 +88,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
             </div>
-        </div>
         </div>
     </main>
 
 
-    <div id="modal" class=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-3 w-full max-w-[500px] h-[600px]
+    <div id="modal" class=" absolute top-1/2 left-1/2 max-h-80 md:max-h-116 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-3 w-full max-w-[500px] h-[600px]
         rounded-xl border border-gray-300 bg-white z-50 overflow-y-auto hidden">
         <h1 class="mx-auto text-center  mt-2">Worker Info</h1>
         <form id="employeForm" class="flex flex-col items-start gap-2 mx-auto  mt-10   ">
@@ -107,11 +103,12 @@
             <span class="text-red-600 text-sm error-message" id="nomError"></span>
             <label class="w-full max-w-[240px] text-left">Role:</label>
             <select id="roleSelect" class="w-full max-w-[500px]  p-3 rounded-xl border border-gray-300">Role
-                <option>Réceptionniste</option>
-                <option>Technicien IT</option>
-                <option>Manager</option>
-                <option>Nettoyage</option>
-                <option>Agent de sécurité</option>
+                <option value="Réceptionniste">Réceptionniste</option>
+                <option value="Technicien IT">Technicien IT</option>
+                <option value="Manager">Manager</option>
+                <option value="Nettoyage">Nettoyage</option>
+                <option value="Agent de sécurité">Agent de sécurité</option>
+                <option value="Autres Roles">Autre Roles</option>
             </select>
 
 
@@ -150,10 +147,9 @@
             </div>
         </form>
     </div>
-    <div id="info_"
-        class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/30 flex justify-center items-center hidden">
-        <div class="bg-white flex flex-col p-3 justify-center items-center min-w-[300px] min-h-[400px] rounded-xl">
-            <img src="" alt="" class="rounded-full w-50 h-50">
+    <div id="info_" class="modal w-full h-full  fixed top-0 left-0 z-50 bg-black/30 flex justify-center items-center hidden">
+        <div class="bg-white flex flex-col p-3 justify-center max-h-80 md:max-h-116 items-center min-w-[300px]  rounded-xl overflow-y-auto">
+            <img src="" alt="" class="rounded-full w-35 h-35 md:w-50 md:h-50">
             <p>name: <span class="name"></span></p>
             <p>role: <span class="role"></span></p>
             <p>phone: <span class="phone"></span></p>
@@ -162,12 +158,8 @@
             <div class="Experience mt-2 w-full"></div>
         </div>
     </div>
-    <div id="assign" class="modal w-full h-full fixed top-0 left-0 z-50 bg-black/10 flex justify-center items-center">
+    <div id="assign" class="modal w-full h-full  fixed top-0 left-0 z-50 bg-black/10 flex justify-center items-center">
     </div>
-    <!-- <div class="bg-red-800 flex flex-col p-3 justify-center items-center min-w-[300px] min-h-[400px] rounded-xl">
-        <p>worker to assign</p>
-        <div id="listEmployee"></div>
-    </div>  -->
 
     <script src="main.js"></script>
 </body>
