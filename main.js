@@ -1,10 +1,10 @@
 // ============================================================
-// Données initiales : Récupération ou création du tableau
+//            Donnees initiales 
 // ============================================================
 let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
     {
         id: 1,
-        Nom: "hello",
+        Nom: "khadija",
         Role: "Technicien IT",
         Url: "Image_profile1.jpg",
         email: "khadija@gmail.com",
@@ -12,12 +12,12 @@ let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
         is_worked: false,
         zone_work: null,
         Experience: [
-            { Entreprise: "hhhd", Post: "Receptionniste", dateDeub: "12-04-2002", dateFin: "12-07-2002" }
+            { Entreprise: "MARCA", Post: "Receptionniste",dateDebut: "12-04-2002", dateFin: "12-07-2029" }
         ]
     },
     {
         id: 2,
-        Nom: "kkk",
+        Nom: "Houda",
         Role: "Manager",
         Url: "Image_profile2.jpg",
         email: "youssef@gmail.com",
@@ -25,16 +25,54 @@ let tabEmployer = JSON.parse(localStorage.getItem("employer")) || [
         is_worked: false,
         zone_work: null,
         Experience: [
-            { Entreprise: "ABC Corp", Post: "Manager", dateDeub: "12-04-2002", dateFin: "12-07-2002" }
+            { Entreprise: "OCP", Post: "Manager",dateDebut: "12-04-2002", dateFin: "12-07-2030" }
+        ]
+    },   
+    {
+        id: 3,
+        Nom: "Sara",
+        Role: "Réceptionniste",
+        Url: "Image_profile1.jpg",
+        email: "sara@gmail.com",
+        phone: "0623456789",
+        is_worked: false,
+        zone_work: null,
+        Experience: [
+            { Entreprise: "MARCA", Post: "Réceptionniste", dateDebut: "10-01-2020", dateFin: "15-05-2023" }
+        ]
+    },
+    {
+        id: 4,
+        Nom: "Amine",
+        Role: "Agent de sécurité",
+        Url: "Image_profile2.jpg",
+        email: "amine@gmail.com",
+        phone: "0678945612",
+        is_worked: false,
+        zone_work: null,
+        Experience: [
+            { Entreprise: "SecurTech", Post: "Sécurité", dateDebut: "22-03-2018", dateFin: "01-09-2022" }
+        ]
+    },
+    {
+        id: 5,
+        Nom: "Hamza",
+        Role: "Technicien IT",
+        Url: "Image_profile1.jpg",
+        email: "imane@gmail.com",
+        phone: "0654321876",
+        is_worked: false,
+        zone_work: null,
+        Experience: [
+            { Entreprise: "OCP", Post: "Technicien IT", dateDebut: "05-11-2019", dateFin: "25-06-2024" }
         ]
     }
 ];
 
+
 let container = document.getElementById("cards-container");
-
-
 // ============================================================
-// Sauvegarder employé dans localStorage
+// Sauvegarder employes dans localStorage
 // ============================================================
 function setEmployer(tabEmployer) {
     localStorage.setItem("employer", JSON.stringify(tabEmployer));
@@ -42,7 +80,7 @@ function setEmployer(tabEmployer) {
 setEmployer(tabEmployer);
 
 // ============================================================
-// Récupérer les employées du localStorage
+// Recuperer les employees du localStorage
 // ============================================================
 function getEmployer() {
     return JSON.parse(localStorage.getItem("employer") || []);
@@ -52,24 +90,22 @@ const infoModal = document.getElementById('info_');
 
 
 // ============================================================
-// Affichage de la liste principale des employés (sidebar)
+// Affichage de la liste principale des employees en sidebar
 // ============================================================
 function AfficherCarte(data) {
     container.innerHTML = "";
-
     for (let i = 0; i < data.length; i++) {
         const employe = data[i];
         const div = document.createElement('div');
 
         if (!employe.is_worked) {
-
             div.innerHTML = `
-            <div class="card rounded-xl p-2 md:p-4 m-2 flex items-center bg-red-400 gap-1 md:gap-4 cursor-pointer" data-id="${employe.id}"> 
+            <div class="card rounded-xl p-2 md:p-4 m-2 flex items-center shadow-2xl gap-4 md:gap-4 cursor-pointer" data-id="${employe.id}"> 
                 <img src="${employe.Url}" class="rounded-full w-12 h-12 md:w-20 md:h-20">
                 <div class="flex flex-col">
-                    
                     <h2 class="font-bold text-lg">${employe.Nom}</h2> 
                     <p class="text-gray-600">${employe.Role}</p>
+                    <button type="button" class="btn-delete bg-red-500 rounded-xl w-20 h-10">supprimer</button>
                 </div>
             </div>
             `;
@@ -77,13 +113,32 @@ function AfficherCarte(data) {
 
         container.appendChild(div);
 
+        
+        const deleteBtn = div.querySelector('.btn-delete');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                supprimerEmploye(employe.id);
+            });
+        }
 
         div.addEventListener('click', () => {
             ouvrirModalInfo(employe);
         });
     }
 }
+
 AfficherCarte(tabEmployer);
+
+// ============================================================
+//Fonction supprimer carte qui deja existe en sidebar
+// ============================================================
+
+function supprimerEmploye(id) {
+    tabEmployer = tabEmployer.filter(emp => emp.id !== id);   
+    localStorage.setItem("employer", JSON.stringify(tabEmployer));   
+    AfficherCarte(tabEmployer);
+}
 
 
 // ============================================================
@@ -97,24 +152,21 @@ function ouvrirModalInfo(employe) {
     const phone = infoModal.querySelector(".phone");
     const Actuel=infoModal.querySelector(".Actuel");
     const experienceContainer = infoModal.querySelector(".Experience");
-
     img.src = employe.Url;
     name.textContent = employe.Nom;
     role.textContent = employe.Role;
     email.textContent = employe.email;
     phone.textContent = employe.phone;
     Actuel.textContent=employe.zone_work;
-
-    
     experienceContainer.innerHTML = "";
 
     employe.Experience.forEach(exp => {
         const div = document.createElement("div");
-        div.className = "p-2 border rounded-lg mb-2 w-full";
+        div.className = "p-2 border rounded-lg bg-green-100 mb-2 w-full";
         div.innerHTML = `
             <p><strong>Entreprise:</strong> ${exp.Entreprise}</p>
             <p><strong>Post:</strong> ${exp.Post}</p>
-            <p><strong>Début:</strong> ${exp.dateDeub}</p>
+            <p><strong>Début:</strong> ${exp.dateDebut}</p>
             <p><strong>Fin:</strong> ${exp.dateFin}</p>
         `;
         experienceContainer.appendChild(div);
@@ -162,7 +214,7 @@ function addExperience() {
 
 
 // ============================================================
-// Ouvrir / fermer modal d'ajout employé
+// Ouvrir et  fermer modal d'ajout employes
 // ============================================================
 function AddWorker(modalId) {
     const modal = document.getElementById(modalId);
@@ -173,13 +225,13 @@ document.getElementById("btncancel").addEventListener("click", () => AddWorker("
 
 
 // ============================================================
-// Prévisualisation de l'image
+// previsualisation d'image
 // ============================================================
 const imgInput = document.getElementById('photoInput');
 const previewimg = document.getElementById('photoPreview');
 
 imgInput.addEventListener('change', (e) => {
-    previewimg.src = e.target.value || "Image_profile1.jpg";
+    previewimg.src = e.target.value;
     previewimg.classList.remove("hidden");
 });
 
@@ -188,94 +240,69 @@ imgInput.addEventListener('change', (e) => {
 // Valider le formulaire d'ajout
 // ============================================================
 function validateEmployeeForm() {
-
     let isValid = true;
-
     const nom = document.getElementById("nomInput").value.trim();
-    const role = document.getElementById("roleSelect").value;
-    const url = document.getElementById("photoInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
     const phone = document.getElementById("phoneInput").value.trim();
     const nomError   = document.getElementById("nomError");
     const emailError = document.getElementById("emailError");
     const phoneError = document.getElementById("phoneError");
-    const urlError   = document.getElementById("urlError");
+   
     const nameRegex  = /^[A-Za-z\s]{3,20}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{8,15}$/;
     nomError.textContent = "";
     emailError.textContent = "";
     phoneError.textContent = "";
-
     if (!nameRegex.test(nom)) {
         nomError.textContent = "Nom invalide";
         isValid = false;
     }
-
     if (!emailRegex.test(email)) {
-        emailError.textContent = "Email invalide !";
+        emailError.textContent = "Email invalide";
         isValid = false;
     }
-
     if (!phoneRegex.test(phone)) {
-        phoneError.textContent = "Numéro invalide !";
+        phoneError.textContent = "Numéro invalide";
         isValid = false;
     }
-
     const experienceDivs = document.querySelectorAll("#experience-container > div");
-
     for (let div of experienceDivs) {
-
         const entreprise = div.querySelector("input[name='entreprise']");
         const post       = div.querySelector("input[name='post']");
         const dateDebut  = div.querySelector("input[name='dateDebut']");
-        const dateFin    = div.querySelector("input[name='dateFin']");
-
-        
+        const dateFin    = div.querySelector("input[name='dateFin']");   
         let expError = div.querySelector(".expError");
         if (!expError) {
             expError = document.createElement("span");
             expError.className = "text-red-600 text-sm expError";
             div.appendChild(expError);
         }
-        expError.textContent = "";
-
-        
-        if (
-            entreprise.value.trim() === "" ||
-            post.value.trim() === "" ||
-            dateDebut.value === "" ||
-            dateFin.value === ""
-        ) {
+        expError.textContent = "";  
+        if (entreprise.value.trim() === "" || post.value.trim() === "" || dateDebut.value === "" || dateFin.value === "") {
             expError.textContent = "Tous les champs de l'expérience sont obligatoires";
             isValid = false;
             continue;
-        }
-
-       
+        }      
         if (new Date(dateDebut.value) > new Date(dateFin.value)) {
-            expError.textContent = "Date début doit être  inferieur a date fin";
+            expError.textContent = "date début doit être  inferieur a date fin";
             isValid = false;
         }
     }
-
     return isValid;
 }
-
-
-
 document.getElementById("btnsave").addEventListener("click", function (e) {
     e.preventDefault();
 
     if (validateEmployeeForm()) {
         saveEmployee();
-        alert("Employé enregistré avec succès !");
+        alert("Employé enregistré avec succès");
     }
 });
 
 
 // ============================================================
-// Sauvegarder nouvel employé
+// ajouter nouvel employeer
 // ============================================================
 function saveEmployee() {
 
@@ -289,8 +316,7 @@ function saveEmployee() {
     const experiences = [];
 
     for (let div of experienceDivs) {
-        experiences.push({
-            Entreprise: div.querySelector("input[name='entreprise']").value,
+        experiences.push({ Entreprise: div.querySelector("input[name='entreprise']").value,
             Post: div.querySelector("input[name='post']").value,
             dateDebut: div.querySelector("input[name='dateDebut']").value,
             dateFin: div.querySelector("input[name='dateFin']").value
@@ -330,12 +356,11 @@ let _room4 = document.getElementById("room4")
 let _room5 = document.getElementById("room5")
 let _room6 = document.getElementById("room6")
 
-
 // ============================================================
-// Affichage des employés dans une zone + assignation
+// Affichage des employees dans une zone plus assignation
 // ============================================================
 function afficherEmployesZone(room_name, container_) {
-    const maxPerZone = {
+    const maxParZone = {
         "Reception": 3,
         "Salle des serveurs": 2,
         "Salle de sécurité": 2,
@@ -356,28 +381,30 @@ function afficherEmployesZone(room_name, container_) {
 
     let employes = JSON.parse(localStorage.getItem("employer")) || [];
     let rolesAcceptes = roles_zone[room_name] || [];
-    let assignedCount = employes.filter(emp => emp.zone_work === container_.id).length;
+    let assignedCount = employes.filter(emp =>emp.zone_work === container_.id).length;
 
     
-    if (assignedCount >= (maxPerZone[room_name] || 10)) {
-        alert(`Limite d'employés pour ${room_name} atteinte !`);
+    if (assignedCount >= (maxParZone[room_name])) {
+        alert(`Limite d'employés pour ${room_name} atteinte `);
         return;
     }
-
-    // Préparer modal d’assignation
     const assignModal = document.getElementById("assign");
-    assignModal.innerHTML = `<div class="bg-white p-4 rounded-xl min-w-[300px] min-h-[400px] flex flex-col items-center">
+   assignModal.innerHTML = `
+<div class="bg-white p-4 rounded-xl min-w-[300px] min-h-[400px] flex flex-col items-center relative">
     <h2 class="font-bold mb-4">Assigner un employé à ${room_name}</h2>
     <div id="listEmployee" class="flex flex-col gap-2 w-full max-h-[300px] overflow-y-auto"></div>
-    <button onclick="document.getElementById('assign').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl">Close</button>
+    <button  onclick="document.getElementById('assign').classList.add('hidden')" 
+        class="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-red-500 text-white rounded-xl">Close
+    </button>
 </div>`;
+
 
     const listEmployee = document.getElementById("listEmployee");
 
     for (let emp of employes) {
         if (!emp.is_worked && rolesAcceptes.includes(emp.Role)) {
             const div = document.createElement("div");
-            div.className = "card cursor-pointer bg-red-500 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4";
+            div.className = "card bg-green-500 shadow-lg rounded-xl p-4 m-2 flex items-center gap-4";
             div.innerHTML = `<img src="${emp.Url}" class="rounded-full w-20 h-20">
             <div class="flex flex-col">
                 <h5 class="font-bold">${emp.id}</h5>
@@ -412,7 +439,7 @@ function aficher_data() {
             const zone = document.getElementById(emp.zone_work);
 
             zone.innerHTML += `
-                <div class=" mt-2 card cursor-pointer bg-blue-500 w-full max-w-[12rem] shadow-lg rounded-xl p-2 flex items-center justify-between " data-id="${emp.id}">
+                <div class=" mt-2 card bg-blue-500 w-full max-w-[12rem] shadow-lg rounded-xl p-2 flex items-center justify-between " data-id="${emp.id}">
                     <img src="${emp.Url}" class="rounded-full w-12 h-12">
                     <div class="flex flex-col">
                         <h2 class="font-bold text-sm">${emp.Nom}</h2>
@@ -442,18 +469,14 @@ _room6.addEventListener("click", () => afficherEmployesZone("Salle d'archives", 
 
 
 // ============================================================
-// Suppression d'un employé depuis une zone
+// Suppression d'un employer depuis une zone
 // ============================================================
 document.addEventListener("click", (e) => {
-
     const card = e.target.closest(".card");
     if (!card) return;
-
     const id = parseInt(card.dataset.id); 
     let employes = JSON.parse(localStorage.getItem("employer")) || [];
     let emp = employes.find(emp => emp.id ==id);
-
-    // Si click sur le bouton supprimer
     if (e.target.closest(".supprimer")) {
         if (emp) {
             emp.is_worked = false;
@@ -463,14 +486,8 @@ document.addEventListener("click", (e) => {
         window.location.reload();
         return;
     }
-
-    // Sinon clic ksur la carte => ouvrir le modal
-   
     ouvrirModalInfo(emp);
 });
-
-
-
 
 
 // ============================================================
@@ -523,3 +540,4 @@ function color_zone() {
     });
 }
 window.addEventListener("load",color_zone);
+

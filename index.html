@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
 </head>
 <body class="overflow-hidden">
-    <main >
+    <main>
         <div class="layout flex-col  md:flex-row">
            
-            <div id="sidebar" class="sidebar w-1/4 md:w-1/5 h-screen bg-green-700 p-2 flex flex-col items-center">
+            <div id="sidebar" class="sidebar w-1/4 md:w-1/5 h-screen  p-2 flex flex-col items-center">
                 <h1 class="  font-bold text-[30px]">WorkSphere</h1>
                 <button id="btn" class="w-full bg-green-500 p-2 mt-10 rounded-xl">
                     <i class="fas fa-plus"></i> Add New Worker
@@ -34,7 +33,7 @@
                                         class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
                                 <div id="container_conference"
                                     style="max-height:200px; margin-left:102px; overflow-y: scroll;"></div>
-                                <div id="staffRoom"></div>
+                                
                             </div>
 
                         </div>
@@ -46,7 +45,7 @@
                                         class="rounded-lg bg-green-500 w-10"><i class="fas fa-plus"></i></button></div>
                                 <div id="container_reseption_"
                                     style="max-height:200px;  margin-left:20px; overflow-y: scroll;"></div>
-                                <div id="staffRoom"></div>
+                               
                             </div>
 
                         </div>
@@ -147,6 +146,7 @@
             </div>
         </form>
     </div>
+    
     <div id="info_" class="modal w-full h-full  fixed top-0 left-0 z-50 bg-black/30 flex justify-center items-center hidden">
         <div class="bg-white flex flex-col p-3 justify-center max-h-80 md:max-h-116 items-center min-w-[300px]  rounded-xl overflow-y-auto">
             <img src="" alt="" class="rounded-full w-35 h-35 md:w-50 md:h-50">
@@ -158,8 +158,10 @@
             <div class="Experience mt-2 w-full"></div>
         </div>
     </div>
-    <div id="assign" class="modal w-full h-full  fixed top-0 left-0 z-50 bg-black/10 flex justify-center items-center">
+
+    <div id="assign" class="modal w-full h-full  fixed top-0 left-0 z-50 flex justify-center items-center">
     </div>
+<div id="employeesContainer"></div>
 
     <script src="main.js"></script>
 </body>
