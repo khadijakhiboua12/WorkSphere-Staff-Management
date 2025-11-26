@@ -1,4 +1,4 @@
-Fonctionnalités Principales
+##Fonctionnalités Principales
 1. Gestion Interactive du Personnel
 Ajout/Modification/Suppression : Ajouter de nouveaux employés via une modale complète, les déplacer sur le plan, ou les retirer de leur poste (bouton "X") pour les replacer dans la liste "Unassigned Staff".
 Modale d'Ajout d'Employé : Formulaire incluant Nom, Rôle, Photo (URL), Email, Téléphone et un champ dynamique pour les Expériences Professionnelles.
