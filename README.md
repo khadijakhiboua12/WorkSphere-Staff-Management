@@ -47,8 +47,8 @@ Des règles métier strictes régissent l'affectation des employés aux zones :
 
 | Composant | Technologie/Méthode | Notes |
 |-----------|--------------------|-------|
-| Structure | HTML5 (validation W3C) | Sémantique et accessible. |
-| Mise en page | CSS3 (validation W3C) | Utilisation de Flexbox et Grid pour une structure robuste. |
+| Structure | HTML5  | Sémantique et accessible. |
+| Mise en page | CSS3  | Utilisation de Flexbox et Grid pour une structure robuste. |
 | Design/UX | Design moderne et responsive (formes arrondies, boutons colorés : vert, orange, rouge) | Palette de couleurs cohérente et icônes intuitives. |
 | Responsivité | Media Queries avancées | Gestion complète des 4 tailles d'écrans Portrait et 2 tailles Paysage. |
 | Interaction | JavaScript | Logique métier (règles de placement, validation de formulaire) et animations fluides. |
@@ -60,8 +60,7 @@ Des règles métier strictes régissent l'affectation des employés aux zones :
 |-------------|-----------------|-------------|
 | Portrait | Jusqu'à 767px | Mobile |
 | Portrait | 768px - 1023px | Tablette |
-| Portrait | 1024px - 1279px | Petit écran d'ordinateur |
-| Portrait | 1280px et plus | Grand écran d'ordinateur |
+| Portrait | 1024px - 1279px | Petit écran d'ordinateur ||
 | Paysage | 768px - 1023px | Mobile (large) |
 | Paysage | 1024px - 1279px | Tablette (large) |
 
